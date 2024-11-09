@@ -46,7 +46,8 @@
 	"scripts": {
 		"dev": "wireit",
 		"build": "wireit",
-		"server:build": "wireit"
+		"server:build": "wireit",
+		"server:serve": "wireit"
 	},
 	"wireit": {
 		"server:build": {
@@ -57,6 +58,13 @@
 			],
 			"output": [
 				"./server.js"
+			]
+		},
+		"server:serve": {
+			"command": "node server.js",
+			"service": true,
+			"dependencies": [
+				"server:build"
 			]
 		},
 		"dev": {
