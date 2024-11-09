@@ -1,11 +1,12 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "Node",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"useDefineForClassFields": false,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
+		"resolveJsonModule": true,
 		"types": [
 			"vite/client",
 			"lit",
