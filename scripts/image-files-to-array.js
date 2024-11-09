@@ -1,6 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+// Recreate __dirname for ESM
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 const DIST_DIR = path.join(__dirname, '../dist/data');
 const OUTPUT_FILE = path.join(__dirname, '../src/files-array.json');
 
