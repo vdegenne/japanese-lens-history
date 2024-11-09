@@ -5,6 +5,7 @@ node_modules
 lib
 public/material-symbols.woff2
 src/styles/stylesheets/symbols.css
+/src/files-array.json
 .firebase
 public/favicon.ico
 public/*64x64.png

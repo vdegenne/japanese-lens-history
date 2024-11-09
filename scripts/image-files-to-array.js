@@ -7,12 +7,12 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const DIST_DIR = path.join(__dirname, '../dist/data');
 const OUTPUT_FILE = path.join(__dirname, '../src/files-array.json');
 
-// Function to scan the directory and get the list of files
+// Function to scan the directory and get the list of filenames without .json extension
 async function getFilesFromDirectory(dir) {
 	try {
 		const files = await fs.readdir(dir);
-		// Only include JSON files (you can filter more if necessary)
-		return files.filter((file) => file.endsWith('.json'));
+		// Remove '.json' extension from each filename
+		return files.map((file) => file.replace(/\.json$/, ''));
 	} catch (err) {
 		throw new Error('Error reading directory: ' + err);
 	}
@@ -20,7 +20,7 @@ async function getFilesFromDirectory(dir) {
 
 // Function to write the files list to the output JSON
 async function writeFilesArrayToJson(files) {
-	const data = {files: files};
+	const data = {files};
 	try {
 		await fs.writeFile(OUTPUT_FILE, JSON.stringify(data, null, 2));
 		console.log('File successfully written!');

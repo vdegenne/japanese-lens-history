@@ -52,6 +52,7 @@
 	"wireit": {
 		"server:build": {
 			"command": "tsc --project ./tsconfig.server.json",
+			"clean": "if-file-deleted",
 			"files": [
 				"./tsconfig.server.json",
 				"./src/server.ts"
@@ -67,8 +68,21 @@
 				"server:build"
 			]
 		},
+		"image-files-to-array": {
+			"command": "node ./scripts/image-files-to-array.js",
+			"files": [
+				"./scripts/image-files-to-array.js",
+				"./dist/data"
+			],
+			"output": [
+				"./src/files-array.json"
+			]
+		},
 		"dev": {
-			"command": "vite --host"
+			"command": "vite --host",
+			"dependencies": [
+				"image-files-to-array"
+			]
 		},
 		"build": {
 			"command": "vite build",
