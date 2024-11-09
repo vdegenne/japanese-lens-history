@@ -12,6 +12,11 @@ const router = new Router();
 // Directory where images will be stored
 const imageDir = './dist/data';
 
+// Helper function to remove base64 header
+function stripBase64Header(base64String: string): string {
+	return base64String.replace(/^data:image\/\w+;base64,/, '');
+}
+
 // Helper function to generate hash from base64 image data
 async function generateHashFromBase64(base64Data: string): Promise<string> {
 	const binaryData = Uint8Array.from(atob(base64Data), (c) => c.charCodeAt(0));
@@ -31,9 +36,12 @@ router.post('/api/upload', async (ctx) => {
 		return;
 	}
 
+	// Strip the base64 header before hashing
+	const base64Data = stripBase64Header(body.image);
+
 	try {
 		// Generate a unique filename based on the image's hash
-		const imageHash = await generateHashFromBase64(body.image);
+		const imageHash = await generateHashFromBase64(base64Data);
 		const filePath = `${imageDir}/${imageHash}.json`;
 
 		// Check if the file already exists
