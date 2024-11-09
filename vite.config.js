@@ -28,7 +28,7 @@ plugins.push(
 			'src/**/*.ts',
 			'node_modules/@vdegenne/material-color-helpers/lib/elements/**/*.js',
 		],
-	})
+	}),
 );
 
 if (process.env.NODE_ENV === 'production') {
@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === 'production') {
 		plugins.push(
 			viteSingleFile({
 				useRecommendedBuildConfig: false,
-			})
+			}),
 		);
 	} catch {}
 }
@@ -84,7 +84,7 @@ try {
 					},
 				],
 			},
-		})
+		}),
 	);
 } catch {}
 
@@ -99,7 +99,7 @@ export default defineConfig({
 	},
 	build: {
 		// outDir: 'docs',
-		// emptyOutDir: false,
+		emptyOutDir: false,
 		// assetsInlineLimit: 6000,
 		// rollupOptions: {
 		// 	input: {
