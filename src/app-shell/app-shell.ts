@@ -1,8 +1,12 @@
 import {LitElement, html} from 'lit';
+import {until} from 'lit/directives/until.js';
 import {customElement} from 'lit/decorators.js';
 import {withStyles} from 'lit-with-styles';
 import styles from './app-shell.css?inline';
 import {materialShellLoadingOff} from 'material-shell';
+import data from '../files-array.json' with {type: 'json'};
+
+let files = data.files;
 
 declare global {
 	interface Window {
@@ -13,6 +17,14 @@ declare global {
 	}
 }
 
+async function loadImage(hash: string) {
+	const response = await fetch(`/data/${hash}.json`);
+	const data = (await response.json()) as ImageInformation;
+	return html`<!-- -->
+		<img src=${data.image} />
+		<!-- -->`;
+}
+
 @customElement('app-shell')
 @withStyles(styles)
 export class AppShell extends LitElement {
@@ -21,9 +33,9 @@ export class AppShell extends LitElement {
 	}
 
 	render() {
-		return html` <span class="font-bold bg-blue-200 text-orange-500">
-			hello world
-		</span>`;
+		return html`<!-- -->
+			${until(loadImage(data.files[0]), 'loading')}
+			<!-- --> `;
 	}
 }
 
