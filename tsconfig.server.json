@@ -2,11 +2,12 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"module": "ESNext",
-		"moduleResolution": "node",
+		"moduleResolution": "Node",
 		"outDir": "./",
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"strict": true
+		"strict": true,
+		"types": ["./types.d.ts"]
 	},
 	"include": ["./src/server.ts"],
 	"exclude": ["./node_modules"]

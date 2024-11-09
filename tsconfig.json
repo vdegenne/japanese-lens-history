@@ -2,10 +2,18 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"module": "ESNext",
-		"moduleResolution": "node",
+		"moduleResolution": "Node",
 		"useDefineForClassFields": false,
+		"esModuleInterop": true,
 		"experimentalDecorators": true,
-		"types": ["vite/client", "lit", "lit/decorators.js", "material-shell"]
+		"types": [
+			"vite/client",
+			"lit",
+			"lit/decorators.js",
+			"material-shell",
+			"./types.d.ts"
+		]
 	},
-	"include": ["src/**/*.ts"]
+	"include": ["./src/**/*.ts"],
+	"exclude": ["./node_modules"]
 }

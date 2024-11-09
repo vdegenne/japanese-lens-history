@@ -1,10 +1,9 @@
 import Koa from 'koa';
 import Router from '@koa/router';
 import cors from '@koa/cors';
-import bodyParser from '@koa/bodyparser';
+import {bodyParser} from '@koa/bodyparser';
 import fs from 'fs-extra';
 import crypto from 'crypto';
-import {ImageInformation} from './types';
 
 // Set up Koa app
 const app = new Koa();
