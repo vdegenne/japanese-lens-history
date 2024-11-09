@@ -7,12 +7,26 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const DIST_DIR = path.join(__dirname, '../dist/data');
 const OUTPUT_FILE = path.join(__dirname, '../src/files-array.json');
 
-// Function to scan the directory and get the list of filenames without .json extension
+// Function to scan the directory and get the list of filenames along with their creation time
 async function getFilesFromDirectory(dir) {
 	try {
 		const files = await fs.readdir(dir);
-		// Remove '.json' extension from each filename
-		return files.map((file) => file.replace(/\.json$/, ''));
+		const fileStats = await Promise.all(
+			files.map(async (file) => {
+				const filePath = path.join(dir, file);
+				const stats = await fs.stat(filePath);
+				return {
+					name: file.replace(/\.json$/, ''), // Remove '.json' extension
+					birthtime: stats.birthtime, // Get the creation time
+				};
+			}),
+		);
+
+		// Sort files by creation time (newest first)
+		fileStats.sort((a, b) => b.birthtime - a.birthtime);
+
+		// Return only the sorted filenames (without the .json extension)
+		return fileStats.map((file) => file.name);
 	} catch (err) {
 		throw new Error('Error reading directory: ' + err);
 	}
