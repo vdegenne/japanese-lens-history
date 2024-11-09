@@ -45,9 +45,20 @@
 	},
 	"scripts": {
 		"dev": "wireit",
-		"build": "wireit"
+		"build": "wireit",
+		"server:build": "wireit"
 	},
 	"wireit": {
+		"server:build": {
+			"command": "tsc --project ./tsconfig.server.json",
+			"files": [
+				"./tsconfig.server.json",
+				"./src/server.ts"
+			],
+			"output": [
+				"./server.js"
+			]
+		},
 		"dev": {
 			"command": "vite --host"
 		},

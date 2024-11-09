@@ -6,7 +6,6 @@
 		"outDir": "./",
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"strict": true,
 		"types": ["./types.d.ts"]
 	},
 	"include": ["./src/server.ts"],
