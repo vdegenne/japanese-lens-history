@@ -46,6 +46,7 @@ router.post('/api/upload', async (ctx) => {
 
 		// Check if the file already exists
 		if (fs.existsSync(filePath)) {
+			console.log(`This lens is already saved. Ignoring.`);
 			ctx.status = 200;
 			ctx.body = {message: 'Image already exists, no new file created'};
 			return;
@@ -62,6 +63,7 @@ router.post('/api/upload', async (ctx) => {
 
 		// Write the data to a new file with the hash as the filename
 		await fs.writeJson(filePath, imageData);
+		console.log(`writing ${filePath} to system.`);
 
 		ctx.status = 201;
 		ctx.body = {message: 'Image uploaded and saved'};
