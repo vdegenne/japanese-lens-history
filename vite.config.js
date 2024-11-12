@@ -98,7 +98,7 @@ export default defineConfig({
 		proxy: {
 			// '/api': 'http://localhost:23058',
 			'/data': {
-				target: 'http://localhost:5174', // Vite's default dev server address
+				target: 'http://localhost:5173', // Vite's default dev server address
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/data/, '/dist/data'),
 			},
