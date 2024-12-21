@@ -88,6 +88,9 @@
 		},
 		"front:build": {
 			"command": "vite build",
+			"dependencies": [
+				"image-files-to-array"
+			],
 			"files": [
 				"vite.config.ts",
 				"src"
