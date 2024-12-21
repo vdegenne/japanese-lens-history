@@ -1,4 +1,3 @@
-import {execSync} from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -54,7 +53,5 @@ async function generateFilesArray() {
 		console.error('Error: ', error.message);
 	}
 }
-
-execSync('notify-send "yup"');
 
 generateFilesArray();
