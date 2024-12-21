@@ -1,11 +1,10 @@
-import {css, html, LitElement} from 'lit';
+import {html, LitElement} from 'lit';
+import {withStyles} from 'lit-with-styles';
 import {customElement, property, queryAll, state} from 'lit/decorators.js';
 import {guard} from 'lit/directives/guard.js';
 import {until} from 'lit/directives/until.js';
-import {withStyles} from 'lit-with-styles';
-import styles from './viewer-element.css?inline';
 import {store} from '../store.js';
-import toast from 'toastit';
+import styles from './viewer-element.css?inline';
 
 @customElement('viewer-element')
 @withStyles(styles)
@@ -16,7 +15,7 @@ export class ViewerElement extends LitElement {
 	@queryAll('.part') partElements?: HTMLElement[];
 
 	async #loadHash(hash = this.hash) {
-		const response = await fetch(`/data/${hash}.json`);
+		const response = await fetch(`./data/${hash}.json`);
 		this.view = (await response.json()) as ImageInformation;
 
 		// Not very charming but we can't use `updated` since that's async
