@@ -17,7 +17,7 @@ async function getFilesFromDirectory(dir) {
 				const stats = await fs.stat(filePath);
 				return {
 					name: file.replace(/\.json$/, ''), // Remove '.json' extension
-					birthtime: stats.birthtime, // Get the creation time
+					birthtime: stats.mtime, // Get the creation time
 				};
 			}),
 		);
