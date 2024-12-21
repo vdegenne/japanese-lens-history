@@ -1,12 +1,12 @@
 import {LitElement, html} from 'lit';
-import {until} from 'lit/directives/until.js';
-import {customElement} from 'lit/decorators.js';
 import {withStyles} from 'lit-with-styles';
-import styles from './app-shell.css?inline';
+import {customElement, state} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
-import data from '../files-array.json' with {type: 'json'};
-
-let files = data.files;
+import '../viewer-element/viewer-element.js';
+import styles from './app-shell.css?inline';
+import {store} from '../store.js';
+import {withController} from '@snar/lit';
+import {files} from '../data.js';
 
 declare global {
 	interface Window {
@@ -17,24 +17,40 @@ declare global {
 	}
 }
 
-async function loadImage(hash: string) {
-	const response = await fetch(`/data/${hash}.json`);
-	const data = (await response.json()) as ImageInformation;
-	return html`<!-- -->
-		<img src=${data.image} />
-		<!-- -->`;
-}
-
 @customElement('app-shell')
 @withStyles(styles)
+@withController(store)
 export class AppShell extends LitElement {
 	firstUpdated() {
 		materialShellLoadingOff.call(this);
+
+		window.addEventListener('keydown', (event: KeyboardEvent) => {
+			// toast(event.code);
+			if (event.code === 'ArrowLeft') {
+				store.viewIndex++;
+			} else if (event.code === 'ArrowRight') {
+				store.viewIndex--;
+			}
+		});
 	}
 
 	render() {
 		return html`<!-- -->
-			${until(loadImage(data.files[0]), 'loading')}
+			<div id="wrapper">
+				<viewer-element hash=${files[store.viewIndex]}></viewer-element>
+
+				<div id="actions">
+					<md-icon-button @click=${() => store.previous()}
+						><md-icon>arrow_back</md-icon></md-icon-button
+					>
+					<md-icon-button @click="${() => store.random()}" id="casino"
+						><md-icon>casino</md-icon></md-icon-button
+					>
+					<md-icon-button @click=${() => store.next()}
+						><md-icon>arrow_forward</md-icon></md-icon-button
+					>
+				</div>
+			</div>
 			<!-- --> `;
 	}
 }

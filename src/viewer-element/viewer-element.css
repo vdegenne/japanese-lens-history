@@ -1,0 +1,39 @@
+:host {
+	width: 100%;
+}
+
+#view {
+	position: relative;
+	width: 100%;
+}
+#id {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #efefef88;
+}
+.part {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	/*background-color: #efefefaa;*/
+	color: transparent;
+	cursor: pointer;
+}
+.part[hidden] {
+	background-color: red;
+}
+.part[hidden][highlight1],
+.part[hidden][highlight2],
+.part[hidden][highlight3],
+.part[hidden][highlight4],
+.part[hidden][highlight5] {
+	background-color: #dfdf12 !important;
+}
+
+img {
+	display: block;
+	width: 100%;
+}

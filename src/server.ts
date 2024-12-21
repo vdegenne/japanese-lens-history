@@ -61,9 +61,11 @@ router.post('/api/upload', async (ctx) => {
 		// Ensure the directory exists
 		await fs.ensureDir(imageDir);
 
+		const dataSize = Buffer.byteLength(base64Data, 'base64');
+
 		// Write the data to a new file with the hash as the filename
 		await fs.writeJson(filePath, imageData);
-		console.log(`writing ${filePath} to system.`);
+		console.log(`writing ${filePath} to system (size: ${dataSize}B)`);
 
 		ctx.status = 201;
 		ctx.body = {message: 'Image uploaded and saved'};

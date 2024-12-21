@@ -12,7 +12,8 @@
 			"lit",
 			"lit/decorators.js",
 			"material-shell",
-			"./types.d.ts"
+			"./types.d.ts",
+			"toastit"
 		]
 	},
 	"include": ["./src/**/*.ts"],

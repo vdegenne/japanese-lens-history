@@ -95,10 +95,11 @@ export default defineConfig({
 		// preserveSymlinks: true,
 	},
 	server: {
+		port: 5177,
 		proxy: {
 			// '/api': 'http://localhost:23058',
 			'/data': {
-				target: 'http://localhost:5173', // Vite's default dev server address
+				target: 'http://localhost:5177', // Vite's default dev server address
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/data/, '/dist/data'),
 			},

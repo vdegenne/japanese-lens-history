@@ -1,3 +1,4 @@
+import {execSync} from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -36,7 +37,7 @@ async function getFilesFromDirectory(dir) {
 async function writeFilesArrayToJson(files) {
 	const data = {files};
 	try {
-		await fs.writeFile(OUTPUT_FILE, JSON.stringify(data, null, 2));
+		await fs.writeFile(OUTPUT_FILE, JSON.stringify(data));
 		console.log('File successfully written!');
 	} catch (err) {
 		throw new Error('Error writing to file: ' + err);
@@ -53,5 +54,7 @@ async function generateFilesArray() {
 		console.error('Error: ', error.message);
 	}
 }
+
+execSync('notify-send "yup"');
 
 generateFilesArray();
