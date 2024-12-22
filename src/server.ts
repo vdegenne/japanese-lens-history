@@ -1,9 +1,9 @@
-import Koa from 'koa';
-import Router from '@koa/router';
-import cors from '@koa/cors';
 import {bodyParser} from '@koa/bodyparser';
-import fs from 'fs-extra';
+import cors from '@koa/cors';
+import Router from '@koa/router';
 import crypto from 'crypto';
+import fs from 'fs-extra';
+import Koa from 'koa';
 
 // Set up Koa app
 const app = new Koa();
@@ -25,6 +25,14 @@ async function generateHashFromBase64(base64Data: string): Promise<string> {
 	return hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
+async function hashFileExists(hash: string) {
+	const files = await fs.readdir(imageDir);
+	files.reverse(); // there is more chance that the hash we try to insert already exist from *recently*
+	return files.some((filename) => {
+		return new RegExp(`^[0-9]+_${hash}.json$`).test(filename);
+	});
+}
+
 // Define the /api/upload route
 router.post('/api/upload', async (ctx) => {
 	const body: ImageInformation = ctx.request.body;
@@ -42,10 +50,9 @@ router.post('/api/upload', async (ctx) => {
 	try {
 		// Generate a unique filename based on the image's hash
 		const imageHash = await generateHashFromBase64(base64Data);
-		const filePath = `${imageDir}/${imageHash}.json`;
 
 		// Check if the file already exists
-		if (fs.existsSync(filePath)) {
+		if (hashFileExists(imageHash)) {
 			console.log(`This lens is already saved. Ignoring.`);
 			ctx.status = 200;
 			ctx.body = {message: 'Image already exists, no new file created'};
@@ -61,6 +68,7 @@ router.post('/api/upload', async (ctx) => {
 		// Ensure the directory exists
 		await fs.ensureDir(imageDir);
 
+		const filePath = `${Date.now()}_${imageDir}/${imageHash}.json`;
 		const dataSize = Buffer.byteLength(base64Data, 'base64');
 
 		// Write the data to a new file with the hash as the filename

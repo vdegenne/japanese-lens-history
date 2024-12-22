@@ -27,9 +27,9 @@ export class AppShell extends LitElement {
 		window.addEventListener('keydown', (event: KeyboardEvent) => {
 			// toast(event.code);
 			if (event.code === 'ArrowLeft') {
-				store.viewIndex++;
+				store.previous();
 			} else if (event.code === 'ArrowRight') {
-				store.viewIndex--;
+				store.next();
 			}
 		});
 	}
@@ -39,7 +39,12 @@ export class AppShell extends LitElement {
 			<div id="wrapper">
 				<viewer-element hash=${files[store.viewIndex]}></viewer-element>
 
+				<div id="hash">${files[store.viewIndex]}</div>
+
 				<div id="actions">
+					<md-icon-button @click=${() => store.first()}
+						><md-icon>first_page</md-icon></md-icon-button
+					>
 					<md-icon-button @click=${() => store.previous()}
 						><md-icon>arrow_back</md-icon></md-icon-button
 					>
@@ -48,6 +53,9 @@ export class AppShell extends LitElement {
 					>
 					<md-icon-button @click=${() => store.next()}
 						><md-icon>arrow_forward</md-icon></md-icon-button
+					>
+					<md-icon-button @click=${() => store.last()}
+						><md-icon>last_page</md-icon></md-icon-button
 					>
 				</div>
 			</div>

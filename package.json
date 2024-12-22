@@ -51,9 +51,16 @@
 		"image-files-to-array": "wireit",
 		"front:dev": "wireit",
 		"dev": "wireit",
-		"build": "wireit"
+		"build": "wireit",
+		"test": "wireit"
 	},
 	"wireit": {
+		"test": {
+			"command": "node ./scripts/test.js",
+			"files": [
+				"./scripts/test.js"
+			]
+		},
 		"server:build": {
 			"command": "tsc --project ./tsconfig.server.json",
 			"clean": "if-file-deleted",
@@ -76,7 +83,7 @@
 			"command": "node ./scripts/image-files-to-array.js",
 			"files": [
 				"./scripts/image-files-to-array.js",
-				"./dist/data"
+				"./dist/data/"
 			],
 			"output": [
 				"./src/files-array.json"

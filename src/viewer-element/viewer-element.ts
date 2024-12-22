@@ -21,7 +21,7 @@ export class ViewerElement extends LitElement {
 		// Not very charming but we can't use `updated` since that's async
 		setTimeout(() => {
 			this.hideRandomPart();
-		}, 80);
+		}, 50);
 
 		return this.#renderView();
 	}
