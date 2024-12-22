@@ -17,6 +17,13 @@ export class AppStore extends ReactiveController {
 	random() {
 		this.viewIndex = Math.floor(Math.random() * files.length);
 	}
+
+	first() {
+		this.viewIndex = 0;
+	}
+	last() {
+		this.viewIndex = files.length - 1;
+	}
 }
 
 export const store = new AppStore();
