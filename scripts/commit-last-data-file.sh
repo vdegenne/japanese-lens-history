@@ -11,7 +11,7 @@ birth_time=$(echo "$file_info" | cut -d' ' -f1)
 size=$(echo "$file_info" | cut -d' ' -f2)
 humansize=$(numfmt --from=auto --to=iec $size)
 file_name=$(echo "$file_info" | cut -d' ' -f3-)
-hash=$(echo "$file_name" | sed -E 's|dist/data/([a-f0-9]+)\.json|\1|')
+hash=$(echo "$file_name" | sed -E 's|dist/data/([a-f0-9_]+)\.json|\1|')
 
 git add "$file_name"
 git commit -m "$hash ($humansize)"

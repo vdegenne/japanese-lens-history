@@ -29,7 +29,7 @@ async function hashFileExists(hash: string) {
 	const files = await fs.readdir(imageDir);
 	files.reverse(); // there is more chance that the hash we try to insert already exist from *recently*
 	return files.some((filename) => {
-		return new RegExp(`^[0-9]+_${hash}.json$`).test(filename);
+		return new RegExp(`^[0-9]+_${hash}\.json$`).test(filename);
 	});
 }
 
@@ -52,7 +52,7 @@ router.post('/api/upload', async (ctx) => {
 		const imageHash = await generateHashFromBase64(base64Data);
 
 		// Check if the file already exists
-		if (hashFileExists(imageHash)) {
+		if (await hashFileExists(imageHash)) {
 			console.log(`This lens is already saved. Ignoring.`);
 			ctx.status = 200;
 			ctx.body = {message: 'Image already exists, no new file created'};
@@ -68,7 +68,7 @@ router.post('/api/upload', async (ctx) => {
 		// Ensure the directory exists
 		await fs.ensureDir(imageDir);
 
-		const filePath = `${Date.now()}_${imageDir}/${imageHash}.json`;
+		const filePath = `${imageDir}/${Date.now()}_${imageHash}.json`;
 		const dataSize = Buffer.byteLength(base64Data, 'base64');
 
 		// Write the data to a new file with the hash as the filename
