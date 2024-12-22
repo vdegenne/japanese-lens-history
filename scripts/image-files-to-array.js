@@ -32,7 +32,6 @@ async function writeFilesArrayToJson(files) {
 async function generateFilesArray() {
 	try {
 		const files = await getFilesFromDirectory(DIST_DIR);
-		console.log(files[0]);
 		await writeFilesArrayToJson(files);
 		console.log('files-array.json created successfully in src directory');
 	} catch (error) {
