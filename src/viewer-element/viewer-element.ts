@@ -44,7 +44,7 @@ export class ViewerElement extends LitElement {
 				${this.view.parts.map(
 					(part) =>
 						html`<!-- -->
-							<div class="part" style="${part.style}">
+							<div class="part" style="${part.style}" aria-label=${part.label}>
 								${true ? '' : part.label}
 							</div>
 							<!-- -->`,

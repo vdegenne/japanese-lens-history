@@ -30,11 +30,12 @@
 		"rollup-plugin-minify-template-literals": "^1.1.7",
 		"snar": "^2.2.0",
 		"snar-save-to-local-storage": "^1.0.1",
-		"tailwindcss": "^3.4.16",
+		"tailwindcss": "^3.4.17",
 		"toastit": "^1.1.7",
 		"typescript": "^5.7.2",
-		"vite": "^6.0.3",
+		"vite": "^6.0.5",
 		"vite-plugin-mdicon2svg": "^0.1.0",
+		"vscode-ui-connector": "^0.2.0",
 		"wireit": "^0.14.9"
 	},
 	"dependencies": {
@@ -55,12 +56,6 @@
 		"test": "wireit"
 	},
 	"wireit": {
-		"test": {
-			"command": "node ./scripts/test.js",
-			"files": [
-				"./scripts/test.js"
-			]
-		},
 		"server:build": {
 			"command": "tsc --project ./tsconfig.server.json",
 			"clean": "if-file-deleted",
@@ -73,8 +68,8 @@
 			]
 		},
 		"server:serve": {
-			"command": "node server.js",
 			"service": true,
+			"command": "node server.js",
 			"dependencies": [
 				"server:build"
 			]
@@ -90,8 +85,11 @@
 			]
 		},
 		"front:dev": {
+			"service": true,
 			"command": "vite --host",
-			"service": true
+			"dependencies": [
+				"dev:vuc"
+			]
 		},
 		"front:build": {
 			"command": "vite build",
@@ -112,7 +110,8 @@
 				"server:serve",
 				"image-files-to-array",
 				"push-last-data-file",
-				"front:dev"
+				"front:dev",
+				"dev:vuc"
 			]
 		},
 		"build": {
@@ -127,6 +126,13 @@
 				"./dist/data"
 			],
 			"output": []
+		},
+		"dev:vuc": {
+			"service": true,
+			"command": "vuc",
+			"files": [
+				"./.vuc.json"
+			]
 		}
 	}
 }

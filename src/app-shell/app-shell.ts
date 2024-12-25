@@ -1,12 +1,12 @@
+import {withController} from '@snar/lit';
 import {LitElement, html} from 'lit';
 import {withStyles} from 'lit-with-styles';
-import {customElement, state} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
+import {files} from '../data.js';
+import {store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
-import {store} from '../store.js';
-import {withController} from '@snar/lit';
-import {files} from '../data.js';
 
 declare global {
 	interface Window {

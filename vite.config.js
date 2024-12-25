@@ -1,20 +1,20 @@
-import {defineConfig} from 'vite';
 import {materialShell} from 'material-shell/vite.js';
 import {materialAll} from 'rollup-plugin-material-all';
+import {defineConfig} from 'vite';
 import {mdicon2svg} from 'vite-plugin-mdicon2svg';
+import {vscodeUiConnectorPlugin} from 'vscode-ui-connector';
 
 /**
  * @type {import('vite').Plugin[]}
  */
 const plugins = [];
 
-/** Dev plugins */
-// plugins.push(
-// 	vscodeUiConnectorPlugin({
-// 		ignoredShadowDoms: ['color-picker', 'color-mode-picker'],
-// 		debug: true,
-// 	}),
-// );
+plugins.push(
+	vscodeUiConnectorPlugin({
+		ignoredShadowDoms: ['color-picker', 'color-mode-picker'],
+		debug: true,
+	}),
+);
 
 /** Material plugins */
 plugins.push(

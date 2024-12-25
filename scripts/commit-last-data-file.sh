@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+set -e
+
 source ~/.zshrc
 
 # Go to the repository root (or wherever git is initialized)
@@ -7,6 +9,10 @@ cd "$(git rev-parse --show-toplevel)"
 
 # Get the oldest non-committed or non-staged file in dist/data/
 file_info=$(git ls-files --others --exclude-standard dist/data/ | xargs -I {} stat --format="%W %s %n" {} | sort -n | head -n 1)
+if [[ -z "$file_info" ]]; then
+	# no file to commit
+	exit 0;
+fi
 birth_time=$(echo "$file_info" | cut -d' ' -f1)
 size=$(echo "$file_info" | cut -d' ' -f2)
 humansize=$(numfmt --from=auto --to=iec $size)
