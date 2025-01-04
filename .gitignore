@@ -15,3 +15,6 @@ public/*512x512.png
 admin-scripts/serviceAccountKey.json
 .mdicon2svg
 server.js
+lens-sessions.json
+written-sessions.json
+server.http

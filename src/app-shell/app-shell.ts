@@ -42,19 +42,19 @@ export class AppShell extends LitElement {
 				<div id="hash">${files[store.viewIndex]}</div>
 
 				<div id="actions">
-					<md-icon-button @click=${() => store.first()}
+					<md-icon-button @click="${() => store.first()}"
 						><md-icon>first_page</md-icon></md-icon-button
 					>
-					<md-icon-button @click=${() => store.previous()}
+					<md-icon-button @click="${() => store.previous()}" id="arrow-back"
 						><md-icon>arrow_back</md-icon></md-icon-button
 					>
 					<md-icon-button @click="${() => store.random()}" id="casino"
 						><md-icon>casino</md-icon></md-icon-button
 					>
-					<md-icon-button @click=${() => store.next()}
+					<md-icon-button @click="${() => store.next()}" id="arrow-forward"
 						><md-icon>arrow_forward</md-icon></md-icon-button
 					>
-					<md-icon-button @click=${() => store.last()}
+					<md-icon-button @click="${() => store.last()}"
 						><md-icon>last_page</md-icon></md-icon-button
 					>
 				</div>

@@ -40,6 +40,7 @@ export class ViewerElement extends LitElement {
 		return html`<!-- -->
 			<div id="view" @click=${this}>
 				<div id="id">#${store.viewIndex}</div>
+				<div id="length">${this.view.image.length}</div>
 				<img src=${this.view.image} />
 				${this.view.parts.map(
 					(part) =>
