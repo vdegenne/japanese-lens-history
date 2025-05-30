@@ -114,7 +114,7 @@ export async function getClipboardImageAsBase64(): Promise<string> {
 	try {
 		// Run the shell command to get Base64 image data
 		const {stdout, stderr} = await execPromise(
-			'wl-paste | magick - -resize 50% - | base64',
+			'wl-paste | magick - -resize 30% - | base64',
 		);
 
 		if (stderr) {
