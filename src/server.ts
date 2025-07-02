@@ -1,11 +1,11 @@
 import {bodyParser} from '@koa/bodyparser';
 import cors from '@koa/cors';
 import Router from '@koa/router';
+import chalk from 'chalk';
+import {exec} from 'child_process';
 import crypto from 'crypto';
 import fs from 'fs-extra';
 import Koa from 'koa';
-import chalk from 'chalk';
-import {exec} from 'child_process';
 import {promisify} from 'util';
 
 // Promisify exec so we can use async/await

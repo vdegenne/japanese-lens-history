@@ -3,7 +3,7 @@ import {LitElement, html} from 'lit';
 import {withStyles} from 'lit-with-styles';
 import {customElement} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
-import {files} from '../data.js';
+import {filenames} from '../data.js';
 import {store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
@@ -37,9 +37,9 @@ export class AppShell extends LitElement {
 	render() {
 		return html`<!-- -->
 			<div id="wrapper">
-				<viewer-element hash=${files[store.viewIndex]}></viewer-element>
+				<viewer-element hash=${filenames[store.viewIndex]}></viewer-element>
 
-				<div id="hash">${files[store.viewIndex]}</div>
+				<div id="hash">${filenames[store.viewIndex]}</div>
 
 				<div id="actions">
 					<md-icon-button @click="${() => store.first()}"

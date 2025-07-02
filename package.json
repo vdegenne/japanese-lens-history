@@ -49,16 +49,34 @@
 		"node-fetch": "^3.3.2"
 	},
 	"scripts": {
-		"server:build": "wireit",
-		"server:serve": "wireit",
-		"image-files-to-array": "wireit",
-		"front:dev": "wireit",
+		"build:server": "wireit",
+		"serve:server": "wireit",
+		"dev:front": "wireit",
 		"dev": "wireit",
 		"build": "wireit",
-		"test": "wireit"
+		"test": "wireit",
+		"serve": "wireit",
+		"build:filenames-text-map": "wireit",
+		"pm2": "pm2 start \"npm run serve --watch\" --name lens-history"
 	},
 	"wireit": {
-		"server:build": {
+		"serve": {
+			"dependencies": [
+				"server:serve",
+				"push-last-data-file"
+			]
+		},
+		"build:filenames-text-map": {
+			"command": "node ./scripts/construct-filenames-texts-map.js",
+			"files": [
+				"./scripts/construct-filenames-texts-map.js",
+				"./dist/data"
+			],
+			"output": [
+				"./src/filenamesTextsMap.json"
+			]
+		},
+		"build:server": {
 			"command": "tsc --project ./tsconfig.server.json",
 			"clean": "if-file-deleted",
 			"files": [
@@ -69,38 +87,28 @@
 				"./server.js"
 			]
 		},
-		"server:serve": {
+		"serve:server": {
 			"service": true,
 			"command": "node server.js",
 			"dependencies": [
-				"server:build"
+				"build:server"
 			]
 		},
-		"image-files-to-array": {
-			"command": "node ./scripts/image-files-to-array.js",
-			"files": [
-				"./scripts/image-files-to-array.js",
-				"./dist/data/"
-			],
-			"output": [
-				"./src/files-array.json"
-			]
-		},
-		"front:dev": {
+		"dev:front": {
 			"service": true,
 			"command": "vite --host",
 			"dependencies": [
 				"dev:vuc"
 			]
 		},
-		"front:build": {
+		"build:front": {
 			"command": "vite build",
 			"dependencies": [
-				"image-files-to-array"
+				"build:filenames-text-map"
 			],
 			"files": [
-				"vite.config.ts",
-				"src"
+				"./vite.config.ts",
+				"./src/"
 			],
 			"output": [
 				"./dist",
@@ -109,23 +117,22 @@
 		},
 		"dev": {
 			"dependencies": [
-				"server:serve",
-				"image-files-to-array",
-				"push-last-data-file",
-				"front:dev",
+				"build:filenames-text-map",
+				"dev:front",
 				"dev:vuc"
 			]
 		},
 		"build": {
 			"dependencies": [
-				"server:build",
-				"front:build"
+				"build:server",
+				"build:front"
 			]
 		},
 		"push-last-data-file": {
 			"command": "./scripts/commit-last-data-file.sh",
 			"files": [
-				"./dist/data"
+				"./scripts/commit-last-data-file.sh",
+				"./dist/data/"
 			],
 			"output": []
 		},
