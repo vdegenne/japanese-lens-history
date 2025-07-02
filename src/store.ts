@@ -24,6 +24,20 @@ export class AppStore extends ReactiveController {
 	last() {
 		this.viewIndex = files.length - 1;
 	}
+
+	loadFromFileName(filename: string) {
+		const index = files.indexOf(filename);
+		if (index >= 0) {
+			this.viewIndex = index;
+		}
+	}
+
+	get files() {
+		return files;
+	}
 }
 
 export const store = new AppStore();
+
+// @ts-ignore
+window.store = store;
