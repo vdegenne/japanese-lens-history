@@ -5,9 +5,10 @@ const imageDir = './dist/data';
 async function hashFileExists(hash) {
 	const files = await fs.readdir(imageDir);
 	files.reverse(); // there is more chance that the hash we try to insert already exist from *recently*
-	return files.some((filename) => {
-		return new RegExp(`^[0-9]+_${hash}.json$`).test(filename);
+	const e = files.some((filename) => {
+		return new RegExp(`^[0-9]+_${hash}\.json$`).test(filename);
 	});
+	console.log(e);
 }
 
 hashFileExists(

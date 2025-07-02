@@ -1,0 +1,8 @@
+{
+  "port": 34691,
+  "openStrategy": "tmux-vim",
+  "tmuxOptions": {
+    "session": "gits/japanese-lens-history"
+  },
+  "postExec": "wlrctl window focus cool-retro-term"
+}

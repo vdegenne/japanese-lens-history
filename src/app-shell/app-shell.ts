@@ -1,12 +1,12 @@
+import {withController} from '@snar/lit';
 import {LitElement, html} from 'lit';
 import {withStyles} from 'lit-with-styles';
-import {customElement, state} from 'lit/decorators.js';
+import {customElement} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
+import {filenames} from '../data.js';
+import {store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
-import {store} from '../store.js';
-import {withController} from '@snar/lit';
-import {files} from '../data.js';
 
 declare global {
 	interface Window {
@@ -37,24 +37,24 @@ export class AppShell extends LitElement {
 	render() {
 		return html`<!-- -->
 			<div id="wrapper">
-				<viewer-element hash=${files[store.viewIndex]}></viewer-element>
+				<viewer-element hash=${filenames[store.viewIndex]}></viewer-element>
 
-				<div id="hash">${files[store.viewIndex]}</div>
+				<div id="hash">${filenames[store.viewIndex]}</div>
 
 				<div id="actions">
-					<md-icon-button @click=${() => store.first()}
+					<md-icon-button @click="${() => store.first()}"
 						><md-icon>first_page</md-icon></md-icon-button
 					>
-					<md-icon-button @click=${() => store.previous()}
+					<md-icon-button @click="${() => store.previous()}" id="arrow-back"
 						><md-icon>arrow_back</md-icon></md-icon-button
 					>
 					<md-icon-button @click="${() => store.random()}" id="casino"
 						><md-icon>casino</md-icon></md-icon-button
 					>
-					<md-icon-button @click=${() => store.next()}
+					<md-icon-button @click="${() => store.next()}" id="arrow-forward"
 						><md-icon>arrow_forward</md-icon></md-icon-button
 					>
-					<md-icon-button @click=${() => store.last()}
+					<md-icon-button @click="${() => store.last()}"
 						><md-icon>last_page</md-icon></md-icon-button
 					>
 				</div>

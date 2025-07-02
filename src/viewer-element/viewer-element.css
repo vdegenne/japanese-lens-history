@@ -13,6 +13,11 @@
 	background-color: #efefef88;
 	color: black;
 }
+#length {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
 .part {
 	position: absolute;
 	display: flex;

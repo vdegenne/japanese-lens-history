@@ -5,7 +5,6 @@ node_modules
 lib
 public/material-symbols.woff2
 src/styles/stylesheets/symbols.css
-/src/files-array.json
 .firebase
 public/favicon.ico
 public/*64x64.png
@@ -15,3 +14,7 @@ public/*512x512.png
 admin-scripts/serviceAccountKey.json
 .mdicon2svg
 server.js
+lens-sessions.json
+written-sessions.json
+server.http
+/src/filenamesTextsMap.json

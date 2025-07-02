@@ -61,7 +61,7 @@ export function getElementsTree(node: Element): Promise<Element[]> {
 }
 export async function getElementInTree(
 	from: Element,
-	condition: (element: Element) => boolean
+	condition: (element: Element) => boolean,
 ): Promise<Element | undefined> {
 	for (const element of await getElementsTree(from)) {
 		if (condition(element)) {
