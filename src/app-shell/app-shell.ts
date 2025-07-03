@@ -1,10 +1,10 @@
+import {type MdOutlinedTextField} from '@material/web/all.js';
 import {withController} from '@snar/lit';
 import {LitElement, html} from 'lit';
 import {withStyles} from 'lit-with-styles';
 import {customElement} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
-import {filenames} from '../data.js';
-import {store} from '../store.js';
+import {F, store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
 
@@ -36,30 +36,50 @@ export class AppShell extends LitElement {
 
 	render() {
 		return html`<!-- -->
-			<div id="wrapper">
-				<viewer-element hash=${filenames[store.viewIndex]}></viewer-element>
-
-				<div id="hash">${filenames[store.viewIndex]}</div>
-
-				<div id="actions">
-					<md-icon-button @click="${() => store.first()}"
-						><md-icon>first_page</md-icon></md-icon-button
-					>
-					<md-icon-button @click="${() => store.previous()}" id="arrow-back"
-						><md-icon>arrow_back</md-icon></md-icon-button
-					>
-					<md-icon-button @click="${() => store.random()}" id="casino"
-						><md-icon>casino</md-icon></md-icon-button
-					>
-					<md-icon-button @click="${() => store.next()}" id="arrow-forward"
-						><md-icon>arrow_forward</md-icon></md-icon-button
-					>
-					<md-icon-button @click="${() => store.last()}"
-						><md-icon>last_page</md-icon></md-icon-button
-					>
+			<header
+				class="flex items-center justify-between pr-2"
+				style="background-color:var(--md-sys-color-surface-container-high);min-height:56px;"
+			>
+				<div class="flex-1">
+					${store.page === 'viewer'
+						? html`<div class="pl-3">#${store.viewIndex}</div>`
+						: store.page === 'search'
+							? html`${F.TEXTFIELD('', 'search')}`
+							: null}
 				</div>
-			</div>
+				${this.#renderPageMenu()}
+			</header>
+
+			<viewer-page ?active=${store.page === 'viewer'}></viewer-page>
+			<search-page ?active=${store.page === 'search'}></search-page>
 			<!-- --> `;
+	}
+
+	#renderPageMenu() {
+		return html`<!-- -->
+			<md-outlined-segmented-button-set
+				@segmented-button-set-selection=${(event: CustomEvent) => {
+					const button = event.detail.button as MdOutlinedTextField;
+					const label = button.label.toLowerCase() as Page;
+					if (label) {
+						store.page = label;
+					}
+				}}
+			>
+				<md-outlined-segmented-button
+					label="Viewer"
+					?selected=${store.page === 'viewer'}
+				>
+					<md-icon slot="icon">view_carousel</md-icon>
+				</md-outlined-segmented-button>
+				<md-outlined-segmented-button
+					label="Search"
+					?selected=${store.page === 'search'}
+				>
+					<md-icon slot="icon">database_search</md-icon>
+				</md-outlined-segmented-button>
+			</md-outlined-segmented-button-set>
+			<!-- -->`;
 	}
 }
 

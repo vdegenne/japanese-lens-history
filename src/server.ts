@@ -190,9 +190,15 @@ router.post('/api/save-lens-session', async (ctx) => {
 	}
 });
 
+interface UploadBodyParams {
+	sessionId: string;
+	base64: string;
+	parts: ImageInformation['parts'];
+}
+
 // Define the /api/upload route
 router.post('/api/upload', async (ctx) => {
-	const {sessionId: id, base64, parts} = ctx.request.body;
+	const {sessionId: id, base64, parts} = ctx.request.body as UploadBodyParams;
 
 	if (id === undefined) {
 		LOG('sessionId is missing');
@@ -243,6 +249,7 @@ router.post('/api/upload', async (ctx) => {
 		const imageData: ImageInformation = {
 			image: session.base64,
 			parts,
+			text: parts.map((p) => p.label).join(''),
 		};
 
 		// Ensure the directory exists
