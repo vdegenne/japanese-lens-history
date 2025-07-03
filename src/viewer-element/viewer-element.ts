@@ -54,7 +54,7 @@ export class ViewerElement extends LitElement {
 					(part) =>
 						html`<!-- -->
 							<div class="part" style="${part.style}" aria-label=${part.label}>
-								${true ? '' : part.label}
+								<span hidden>${part.label}</span>
 							</div>
 							<!-- -->`,
 				)}

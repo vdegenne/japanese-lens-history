@@ -22,6 +22,7 @@ class Router extends ReactiveController {
 				const params = new URLSearchParams(location.search);
 				if (params.has('search')) {
 					store.search = params.get('search');
+					store.page = 'search';
 				}
 				resolve();
 			});

@@ -11,7 +11,7 @@ import {PageElement} from './PageElement.js';
 class SearchPage extends PageElement {
 	render() {
 		return html`<!-- -->
-			<div class="flex flex-wrap gap-2">
+			<div class="flex flex-wrap">
 				${store.searchResult.length
 					? html`<!-- -->
 							${store.searchResult.map((filename) => {
@@ -21,7 +21,7 @@ class SearchPage extends PageElement {
 											store.updateViewIndexFromFilename(filename);
 											store.page = 'viewer';
 										}}
-										style="width:min(500px,100vw);"
+										class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
 										filename=${filename}
 									></viewer-element>
 								`;

@@ -7,6 +7,8 @@ import {materialShellLoadingOff} from 'material-shell';
 import {F, store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
+import toast from 'toastit';
+import {sleep} from '../utils.js';
 
 declare global {
 	interface Window {
@@ -23,15 +25,6 @@ declare global {
 export class AppShell extends LitElement {
 	firstUpdated() {
 		materialShellLoadingOff.call(this);
-
-		window.addEventListener('keydown', (event: KeyboardEvent) => {
-			// toast(event.code);
-			if (event.code === 'ArrowLeft') {
-				store.previous();
-			} else if (event.code === 'ArrowRight') {
-				store.next();
-			}
-		});
 	}
 
 	render() {
@@ -44,7 +37,12 @@ export class AppShell extends LitElement {
 					${store.page === 'viewer'
 						? html`<div class="pl-3">#${store.viewIndex}</div>`
 						: store.page === 'search'
-							? html`${F.TEXTFIELD('', 'search')}`
+							? html`${F.TEXTFIELD('', 'search', {
+									async init(element) {
+										// await sleep(100);
+										element.focus();
+									},
+								})}`
 							: null}
 				</div>
 				${this.#renderPageMenu()}

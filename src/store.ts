@@ -19,9 +19,9 @@ export class AppStore extends ReactiveController {
 		this.viewIndex = (this.viewIndex + 1) % filenames.length;
 	};
 
-	random() {
+	random = () => {
 		this.viewIndex = Math.floor(Math.random() * filenames.length);
-	}
+	};
 
 	first = () => {
 		this.viewIndex = 0;
@@ -54,6 +54,14 @@ export class AppStore extends ReactiveController {
 			} else {
 				this.searchResult = search(this.search);
 			}
+		}
+	}
+
+	togglePage() {
+		if (store.page === 'viewer') {
+			store.page = 'search';
+		} else {
+			store.page = 'viewer';
 		}
 	}
 }
