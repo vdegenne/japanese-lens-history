@@ -41,7 +41,9 @@ class GamepadController extends ReactiveController {
 					case Mode.NORMAL:
 						break;
 					case Mode.PRIMARY:
+						break;
 					case Mode.SECONDARY:
+						break;
 					case Mode.TERTIARY:
 						if (store.page === 'viewer') {
 							clickButton('#arrow-back');
@@ -54,8 +56,6 @@ class GamepadController extends ReactiveController {
 				switch (mode) {
 					case Mode.NORMAL:
 						break;
-					case Mode.PRIMARY:
-					case Mode.SECONDARY:
 					case Mode.TERTIARY:
 						if (store.page === 'viewer') {
 							clickButton('#arrow-forward');
@@ -68,9 +68,6 @@ class GamepadController extends ReactiveController {
 				switch (mode) {
 					case Mode.NORMAL:
 						break;
-					case Mode.PRIMARY:
-					case Mode.SECONDARY:
-					case Mode.TERTIARY:
 				}
 			});
 
@@ -101,9 +98,6 @@ class GamepadController extends ReactiveController {
 				switch (mode) {
 					case Mode.NORMAL:
 						break;
-					case Mode.PRIMARY:
-					case Mode.SECONDARY:
-					case Mode.TERTIARY:
 				}
 			});
 
@@ -113,8 +107,6 @@ class GamepadController extends ReactiveController {
 						break;
 					case Mode.PRIMARY:
 						break;
-					case Mode.SECONDARY:
-					case Mode.TERTIARY:
 				}
 			});
 
