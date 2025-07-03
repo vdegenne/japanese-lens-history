@@ -76,7 +76,7 @@ export class AppShell extends LitElement {
 					label="Search"
 					?selected=${store.page === 'search'}
 				>
-					<md-icon slot="icon">database_search</md-icon>
+					<md-icon slot="icon">search</md-icon>
 				</md-outlined-segmented-button>
 			</md-outlined-segmented-button-set>
 			<!-- -->`;
