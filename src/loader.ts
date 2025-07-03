@@ -13,4 +13,6 @@ document.querySelector<HTMLElement>('material-shell').appendChild(app);
 
 import './global-listeners.js';
 
+import './router.js';
+
 // import './gamepad.js';

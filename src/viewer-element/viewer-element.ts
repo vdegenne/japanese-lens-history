@@ -9,18 +9,21 @@ import styles from './viewer-element.css?inline';
 @customElement('viewer-element')
 @withStyles(styles)
 export class ViewerElement extends LitElement {
-	@property() hash: string;
-	@state() view: ImageInformation;
+	@property() filename: string;
+	@state() imageInfo: ImageInformation;
+
+	@state() showId = false;
+	@state() showImageSize = false;
 
 	@queryAll('.part') partElements?: HTMLElement[];
 
-	async #loadHash(hash = this.hash) {
+	async #loadHash(hash = this.filename) {
 		const response = await fetch(`./data/${hash}.json`);
-		this.view = (await response.json()) as ImageInformation;
+		this.imageInfo = (await response.json()) as ImageInformation;
 
 		// Not very charming but we can't use `updated` since that's async
 		setTimeout(() => {
-			this.hideRandomPart();
+			// this.hideRandomPart();
 		}, 50);
 
 		return this.#renderView();
@@ -28,9 +31,12 @@ export class ViewerElement extends LitElement {
 
 	render() {
 		return html`
-			${guard(this.hash, () => {
+			${guard(this.filename, () => {
 				return html`<!-- -->
-					${until(this.#loadHash(), 'Loading...')}
+					${until(
+						this.#loadHash(),
+						html`<md-circular-progress indeterminate></md-circular-progress>`,
+					)}
 					<!-- -->`;
 			})}
 		`;
@@ -39,10 +45,12 @@ export class ViewerElement extends LitElement {
 	#renderView() {
 		return html`<!-- -->
 			<div id="view" @click=${this}>
-				<div id="id">#${store.viewIndex}</div>
-				<div id="length">${this.view.image.length}</div>
-				<img src=${this.view.image} />
-				${this.view.parts.map(
+				<div id="id" ?hidden=${!this.showId}>#${store.viewIndex}</div>
+				<div id="length" ?hidden=${!this.showImageSize}>
+					${this.imageInfo.image.length}
+				</div>
+				<img src=${this.imageInfo.image} />
+				${this.imageInfo.parts.map(
 					(part) =>
 						html`<!-- -->
 							<div class="part" style="${part.style}" aria-label=${part.label}>

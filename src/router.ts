@@ -1,24 +1,32 @@
+import {ReactiveController, state} from '@snar/lit';
 import {installRouter} from 'pwa-helpers';
+import {store} from './store.js';
 
-interface Router {
-	navigateComplete: Promise<void>;
+export enum Page {
+	HOME,
+	SESSION,
 }
 
-const router = {
-	navigateComplete: Promise.resolve(),
-};
+class Router extends ReactiveController {
+	@state() page: Page = Page.HOME;
 
-installRouter(async (location) => {
-	router.navigateComplete = new Promise(async (resolve) => {
-		// do something
-		resolve();
-	});
-});
+	navigateComplete = Promise.resolve();
 
-declare global {
-	interface Window {
-		router: Router;
+	constructor() {
+		super();
+		installRouter(async (location) => {
+			this.navigateComplete = new Promise(async (resolve) => {
+				await store.updateComplete;
+				// const hash = location.hash.slice(1);
+				// const hasParams = new URLSearchParams(hash);
+				const params = new URLSearchParams(location.search);
+				if (params.has('search')) {
+					store.search = params.get('search');
+				}
+				resolve();
+			});
+		});
 	}
 }
 
-window.router = router;
+export const router = new Router();
