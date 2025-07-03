@@ -1,3 +1,5 @@
+import {getElement} from 'html-vision';
+
 export function copyToClipboard(text: string) {
 	navigator.clipboard.writeText(text);
 	// toastit('Copied to clipboard.')
@@ -68,4 +70,9 @@ export async function getElementInTree(
 			return element;
 		}
 	}
+}
+
+export async function clickButton(id: string) {
+	const button = await getElement(id);
+	button?.click();
 }

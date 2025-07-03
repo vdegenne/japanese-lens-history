@@ -15,4 +15,4 @@ import './global-listeners.js';
 
 import './router.js';
 
-// import './gamepad.js';
+import './gamepad.js';

@@ -41,7 +41,10 @@ class SearchPage extends PageElement {
 	protected render(): unknown {
 		return html`<!-- -->
 			<div class="flex-1 flex items-center justify-center">
-				<viewer-element filename=${filenames[store.viewIndex]}></viewer-element>
+				<viewer-element
+					filename=${filenames[store.viewIndex]}
+					style="width:min(1280px, 100vw);"
+				></viewer-element>
 			</div>
 			<div id="actions">
 				<div class="button" @click="${store.first}">
