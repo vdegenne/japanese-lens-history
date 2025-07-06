@@ -1,4 +1,12 @@
 import filenamesTextsMap from './filenamesTextsMap.json' with {type: 'json'};
+import {store} from './store.js';
+
+setTimeout(() => {
+	const keys = Object.keys(filenamesTextsMap);
+	const last = keys[keys.length - 1];
+	console.log(last);
+	store.updateViewIndexFromFilename(last);
+}, 2000);
 
 export const filenames = Object.keys(filenamesTextsMap);
 export {filenamesTextsMap};

@@ -3,6 +3,7 @@ import {FormBuilder} from '@vdegenne/forms/FormBuilder';
 import {PropertyValues} from 'snar';
 import {saveToLocalStorage} from 'snar-save-to-local-storage';
 import {filenames, search} from './data.js';
+import {getElement} from 'html-vision';
 
 @saveToLocalStorage('lens-history:store')
 export class AppStore extends ReactiveController {

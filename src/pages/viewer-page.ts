@@ -37,11 +37,14 @@ import {PageElement} from './PageElement.js';
 		min-height: 50px;
 	}
 `)
-class SearchPage extends PageElement {
-	protected render(): unknown {
+class ViewerPage extends PageElement {
+	protected render() {
 		return html`<!-- -->
 			<div class="flex-1 flex items-center justify-center">
 				<viewer-element
+					id="main-viewer"
+					show-parts
+					part-extra-class="main"
 					filename=${filenames[store.viewIndex]}
 					style="width:min(1280px, 100vw);"
 				></viewer-element>
@@ -72,4 +75,4 @@ class SearchPage extends PageElement {
 	}
 }
 
-export const searchPage = new SearchPage();
+export const viewerPage = new ViewerPage();

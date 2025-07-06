@@ -17,12 +17,14 @@ class SearchPage extends PageElement {
 							${store.searchResult.map((filename) => {
 								return html`
 									<viewer-element
+										show-parts
+										class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
 										@click=${() => {
 											store.updateViewIndexFromFilename(filename);
 											store.page = 'viewer';
 										}}
-										class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
 										filename=${filename}
+										highlight=${store.search}
 									></viewer-element>
 								`;
 							})}
