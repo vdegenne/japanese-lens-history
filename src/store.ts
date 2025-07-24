@@ -3,7 +3,6 @@ import {FormBuilder} from '@vdegenne/forms/FormBuilder';
 import {PropertyValues} from 'snar';
 import {saveToLocalStorage} from 'snar-save-to-local-storage';
 import {filenames, search} from './data.js';
-import {getElement} from 'html-vision';
 
 @saveToLocalStorage('lens-history:store')
 export class AppStore extends ReactiveController {
@@ -49,7 +48,10 @@ export class AppStore extends ReactiveController {
 					break;
 			}
 		}
-		if (_changedProperties.has('search')) {
+		if (_changedProperties.has('search') && this.search) {
+			import('./router.js').then(({default: router}) => {
+				router.hash.$('search', this.search);
+			});
 			if (!this.search) {
 				this.searchResult = [];
 			} else {

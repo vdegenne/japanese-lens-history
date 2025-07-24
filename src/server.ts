@@ -196,6 +196,64 @@ interface UploadBodyParams {
 	parts: ImageInformation['parts'];
 }
 
+let savedIds: string[] = [];
+
+router.post('/api/direct-upload', async (ctx) => {
+	let {sessionId: id, base64, parts} = ctx.request.body as UploadBodyParams;
+	if (id === undefined) {
+		LOG('sessionId is missing');
+		ctx.throw('sessionId is missing', 400);
+	}
+	if (savedIds.includes(id)) {
+		ctx.throw('session already saved.');
+	}
+	if (parts === undefined) {
+		LOG('parts missing');
+		ctx.throw('parts missing', 400);
+	} else if (parts.length === 0) {
+		LOG('parts are empty.');
+		ctx.throw('parts are empty.', 400);
+	}
+
+	if (!base64) {
+		ctx.throw('base64 missing', 400);
+	}
+	if (base64 === 'clipboard') {
+		base64 = await getClipboardImageAsBase64();
+	}
+	const base64Data = stripBase64Header(base64);
+	const imageHash = await generateHashFromBase64(base64Data);
+	if (await hashFileExists(imageHash)) {
+		LOG(`This lens is already saved. Ignoring.`);
+		ctx.status = 200;
+		ctx.body = {message: 'Image already exists, no new file created'};
+		return;
+	}
+
+	// Prepare the data to store
+	const imageData: ImageInformation = {
+		image: base64,
+		parts,
+		text: parts.map((p) => p.label).join(''),
+	};
+
+	const timestamp = Date.now();
+
+	const filePath = `${IMAGES_DIRPATH}/${timestamp}_${imageHash}.json`;
+	const dataSize = Buffer.byteLength(base64Data, 'base64');
+
+	// Write the data to a new file with the hash as the filename
+	await fs.writeJson(filePath, imageData);
+	LOG(`writing ${filePath} to system (size: ${dataSize}B)`);
+
+	LOG('success writing data');
+	// addWrittenSession(session.id);
+	// removeSession(session);
+	savedIds.push(id);
+	ctx.status = 201;
+	ctx.body = {message: 'Image uploaded and saved'};
+});
+
 // Define the /api/upload route
 router.post('/api/upload', async (ctx) => {
 	const {sessionId: id, base64, parts} = ctx.request.body as UploadBodyParams;

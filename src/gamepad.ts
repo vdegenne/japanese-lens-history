@@ -94,7 +94,7 @@ class GamepadController extends ReactiveController {
 					case Mode.NORMAL:
 						break;
 					case Mode.TERTIARY:
-						const searchInput = await getElement('md-outlined-text-field');
+						const searchInput = await getElement('md-filled-text-field');
 						if (
 							store.page === 'search' &&
 							app.shadowRoot.activeElement !== searchInput

@@ -1,3 +1,4 @@
+import '@material/mwc-top-app-bar';
 import {type MdOutlinedTextField} from '@material/web/all.js';
 import {withController} from '@snar/lit';
 import {LitElement, html} from 'lit';
@@ -7,8 +8,6 @@ import {materialShellLoadingOff} from 'material-shell';
 import {F, store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
-import toast from 'toastit';
-import {sleep} from '../utils.js';
 
 declare global {
 	interface Window {
@@ -29,27 +28,31 @@ export class AppShell extends LitElement {
 
 	render() {
 		return html`<!-- -->
-			<header
-				class="flex items-center justify-between pr-2"
-				style="background-color:var(--md-sys-color-surface-container-high);min-height:56px;"
+			<mwc-top-app-bar
+				?dense=${false}
+				style="--mdc-theme-primary:var(--md-sys-color-surface-container-high);--mdc-theme-on-primary:var(--md-sys-color-on-surface);"
 			>
-				<div class="flex-1">
+				<div slot="title">
 					${store.page === 'viewer'
-						? html`<div class="pl-3">#${store.viewIndex}</div>`
+						? html`<div>#${store.viewIndex}</div>`
 						: store.page === 'search'
 							? html`${F.TEXTFIELD('', 'search', {
+									style: 'filled',
+									styles: 'margin-left:-20px',
 									async init(element) {
 										// await sleep(100);
-										element.focus();
+										// element.focus();
 									},
 								})}`
 							: null}
 				</div>
-				${this.#renderPageMenu()}
-			</header>
+				<div slot="actionItems">${this.#renderPageMenu()}</div>
+				<div>
+					<viewer-page ?active=${store.page === 'viewer'}></viewer-page>
+					<search-page ?active=${store.page === 'search'}></search-page>
+				</div>
+			</mwc-top-app-bar>
 
-			<viewer-page ?active=${store.page === 'viewer'}></viewer-page>
-			<search-page ?active=${store.page === 'search'}></search-page>
 			<!-- --> `;
 	}
 
