@@ -10,10 +10,12 @@ import styles from './viewer-element.css?inline';
 @withStyles(styles)
 export class ViewerElement extends LitElement {
 	@property() filename: string;
+	@property() highlight = '';
 	@state() imageInfo: ImageInformation;
-
+	@property({attribute: 'part-extra-class'}) partExtraClass = '';
 	@state() showId = false;
 	@state() showImageSize = false;
+	@property({type: Boolean, attribute: 'show-parts'}) showParts = false;
 
 	@queryAll('.part') partElements?: HTMLElement[];
 
@@ -50,16 +52,24 @@ export class ViewerElement extends LitElement {
 					${this.imageInfo.image.length}
 				</div>
 				<img src=${this.imageInfo.image} />
-				${this.imageInfo.parts.map(
-					(part) =>
-						html`<!-- -->
-							<div class="part" style="${part.style}" aria-label=${part.label}>
-								<span hidden>${part.label}</span>
-							</div>
-							<!-- -->`,
-				)}
-			</div>
-			<!-- -->`;
+				${this.showParts
+					? html`
+							${this.imageInfo.parts.map(
+								(part) => html`
+									<div
+										class="part ${this.partExtraClass}"
+										style="${part.style}"
+										aria-label=${part.label}
+										?highlight=${part.label === store.search}
+									>
+										<span hidden>${part.label}</span>
+									</div>
+								`,
+							)}
+						`
+					: null}
+				<!-- -->
+			</div>`;
 	}
 
 	handleEvent(event: Event) {

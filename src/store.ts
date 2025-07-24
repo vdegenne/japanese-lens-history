@@ -48,7 +48,10 @@ export class AppStore extends ReactiveController {
 					break;
 			}
 		}
-		if (_changedProperties.has('search')) {
+		if (_changedProperties.has('search') && this.search) {
+			import('./router.js').then(({default: router}) => {
+				router.hash.$('search', this.search);
+			});
 			if (!this.search) {
 				this.searchResult = [];
 			} else {

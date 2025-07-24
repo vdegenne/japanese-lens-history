@@ -1,33 +1,17 @@
-import {ReactiveController, state} from '@snar/lit';
-import {installRouter} from 'pwa-helpers';
+import {Hash, Router} from '@vdegenne/router';
 import {store} from './store.js';
 
-export enum Page {
-	HOME,
-	SESSION,
-}
+export default new (class {
+	hash = new Hash<{search: string}>();
 
-class Router extends ReactiveController {
-	@state() page: Page = Page.HOME;
-
-	navigateComplete = Promise.resolve();
-
-	constructor() {
-		super();
-		installRouter(async (location) => {
-			this.navigateComplete = new Promise(async (resolve) => {
-				await store.updateComplete;
-				// const hash = location.hash.slice(1);
-				// const hasParams = new URLSearchParams(hash);
-				const params = new URLSearchParams(location.search);
-				if (params.has('search')) {
-					store.search = params.get('search');
-					store.page = 'search';
-				}
-				resolve();
-			});
-		});
-	}
-}
-
-export const router = new Router();
+	#router = new Router(async ({}) => {
+		await store.updateComplete;
+		if (this.hash.has('search')) {
+			const search = this.hash.$('search');
+			if (search !== store.search) {
+				store.search = search;
+				store.page = 'search';
+			}
+		}
+	});
+})();

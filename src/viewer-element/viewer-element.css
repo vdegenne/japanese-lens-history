@@ -44,3 +44,7 @@ img {
 	display: block;
 	width: 100%;
 }
+
+.part[highlight] {
+	background-color: #dfdf1255;
+}

@@ -3,6 +3,8 @@ import {MGamepad, MiniGamepad, Mode} from '@vdegenne/mini-gamepad';
 import {state} from 'lit/decorators.js';
 import {store} from './store.js';
 import {clickButton} from './utils.js';
+import {getElement} from 'html-vision';
+import {app} from './app-shell/app-shell.js';
 
 class GamepadController extends ReactiveController {
 	@state() gamepad: MGamepad | undefined;
@@ -23,6 +25,7 @@ class GamepadController extends ReactiveController {
 			const {
 				LEFT_STICK_LEFT,
 				LEFT_STICK_RIGHT,
+				RIGHT_STICK_LEFT,
 				RIGHT_STICK_RIGHT,
 				RIGHT_BUTTONS_BOTTOM,
 				RIGHT_BUTTONS_RIGHT,
@@ -46,7 +49,7 @@ class GamepadController extends ReactiveController {
 						break;
 					case Mode.TERTIARY:
 						if (store.page === 'viewer') {
-							clickButton('#arrow-back');
+							// clickButton('#arrow-back');
 							// store.previous();
 						}
 						break;
@@ -58,7 +61,7 @@ class GamepadController extends ReactiveController {
 						break;
 					case Mode.TERTIARY:
 						if (store.page === 'viewer') {
-							clickButton('#arrow-forward');
+							// clickButton('#arrow-forward');
 							// store.next();
 						}
 						break;
@@ -71,13 +74,35 @@ class GamepadController extends ReactiveController {
 				}
 			});
 
+			gamepad.for(RIGHT_STICK_LEFT).before(({mode}) => {
+				switch (mode) {
+					case Mode.NORMAL:
+						clickButton('#arrow-back');
+						break;
+				}
+			});
 			gamepad.for(RIGHT_STICK_RIGHT).before(({mode}) => {
-				if (mode === Mode.NORMAL) {
+				switch (mode) {
+					case Mode.NORMAL:
+						clickButton('#arrow-forward');
+						break;
 				}
 			});
 
-			gamepad.for(RIGHT_BUTTONS_BOTTOM).before(({mode}) => {
-				if (mode === Mode.NORMAL) {
+			gamepad.for(RIGHT_BUTTONS_BOTTOM).before(async ({mode}) => {
+				switch (mode) {
+					case Mode.NORMAL:
+						break;
+					case Mode.TERTIARY:
+						const searchInput = await getElement('md-filled-text-field');
+						if (
+							store.page === 'search' &&
+							app.shadowRoot.activeElement !== searchInput
+						) {
+							store.search = store.search.slice(0, -1);
+							searchInput?.focus();
+						}
+						break;
 				}
 			});
 			gamepad.for(RIGHT_BUTTONS_RIGHT).before(({mode}) => {

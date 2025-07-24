@@ -10,5 +10,5 @@ const filenamesTextsEntries = Object.entries(filenamesTextsMap);
  */
 export function search(search: string): string[] {
 	const results = filenamesTextsEntries.filter((e) => e[1].includes(search));
-	return results.map((e) => e[0]);
+	return results.map((e) => e[0]).reverse();
 }
