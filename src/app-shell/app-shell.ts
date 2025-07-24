@@ -1,5 +1,5 @@
 import '@material/mwc-top-app-bar';
-import {type MdOutlinedTextField} from '@material/web/all.js';
+import '@material/web/textfield/filled-text-field.js';
 import {withController} from '@snar/lit';
 import {LitElement, html} from 'lit';
 import {withStyles} from 'lit-with-styles';
@@ -60,7 +60,7 @@ export class AppShell extends LitElement {
 		return html`<!-- -->
 			<md-outlined-segmented-button-set
 				@segmented-button-set-selection=${(event: CustomEvent) => {
-					const button = event.detail.button as MdOutlinedTextField;
+					const button = event.detail.button as {label: string};
 					const label = button.label.toLowerCase() as Page;
 					if (label) {
 						store.page = label;
