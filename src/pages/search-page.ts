@@ -4,6 +4,8 @@ import {withStyles} from 'lit-with-styles';
 import {customElement} from 'lit/decorators.js';
 import {store} from '../store.js';
 import {PageElement} from './PageElement.js';
+import {SVG_GOOGLE_IMAGES} from '../assets/assets.js';
+import {googleImagesOpen} from '@vdegenne/links';
 
 // class="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
 
@@ -36,14 +38,18 @@ class SearchPage extends PageElement {
 							<!-- -->`}
 			</div>
 
-			<md-fab
-				class="fixed bottom-6 left-6"
-				@click=${() => {
-					store.search = store.search.slice(0, -1);
-				}}
-			>
-				<md-icon slot="icon">backspace</md-icon>
-			</md-fab>
+			<div class="fixed bottom-8 left-8 flex gap-6">
+				<md-fab
+					@click=${() => {
+						store.search = store.search.slice(0, -1);
+					}}
+				>
+					<md-icon slot="icon">backspace</md-icon>
+				</md-fab>
+				<md-fab @click=${() => googleImagesOpen(store.search)}>
+					<md-icon slot="icon">${SVG_GOOGLE_IMAGES}</md-icon>
+				</md-fab>
+			</div>
 			<!-- -->`;
 	}
 }
