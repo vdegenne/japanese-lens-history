@@ -1,13 +1,15 @@
 import '@material/mwc-top-app-bar';
 import '@material/web/textfield/filled-text-field.js';
+import '@material/web/textfield/outlined-text-field.js';
 import {withController} from '@snar/lit';
-import {LitElement, html} from 'lit';
+import {LitElement, css, html} from 'lit';
 import {withStyles} from 'lit-with-styles';
 import {customElement} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
 import {F, store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
+import {TopAppBar} from '@material/mwc-top-app-bar';
 
 declare global {
 	interface Window {
@@ -17,6 +19,13 @@ declare global {
 		'app-shell': AppShell;
 	}
 }
+
+// @ts-ignore
+TopAppBar.elementStyles.push(css`
+	.mdc-top-app-bar__section {
+		padding-left: 0;
+	}
+`);
 
 @customElement('app-shell')
 @withStyles(styles)
@@ -32,13 +41,14 @@ export class AppShell extends LitElement {
 				?dense=${false}
 				style="--mdc-theme-primary:var(--md-sys-color-surface-container-high);--mdc-theme-on-primary:var(--md-sys-color-on-surface);"
 			>
-				<div slot="title">
+				<div slot="title" class="ml-[-19px]">
 					${store.page === 'viewer'
 						? html`<div>#${store.viewIndex}</div>`
 						: store.page === 'search'
 							? html`${F.TEXTFIELD('', 'search', {
-									style: 'filled',
-									styles: 'margin-left:-20px',
+									style: 'outlined',
+									styles:
+										'--md-outlined-field-outline-width:0;--md-outlined-field-focus-outline-width:0;--md-outlined-field-hover-outline-width:0',
 									async init(element) {
 										// await sleep(100);
 										// element.focus();
@@ -60,21 +70,24 @@ export class AppShell extends LitElement {
 		return html`<!-- -->
 			<md-outlined-segmented-button-set
 				@segmented-button-set-selection=${(event: CustomEvent) => {
-					const button = event.detail.button as {label: string};
-					const label = button.label.toLowerCase() as Page;
+					const button = event.detail.button as {label: string; dataset: any};
+					// const label = button.label.toLowerCase() as Page;
+					const label = button.dataset.value;
 					if (label) {
 						store.page = label;
 					}
 				}}
 			>
 				<md-outlined-segmented-button
-					label="Viewer"
+					data-value="viewer"
+					_label="Viewer"
 					?selected=${store.page === 'viewer'}
 				>
 					<md-icon slot="icon">view_carousel</md-icon>
 				</md-outlined-segmented-button>
 				<md-outlined-segmented-button
-					label="Search"
+					data-value="search"
+					_label="Search"
 					?selected=${store.page === 'search'}
 				>
 					<md-icon slot="icon">search</md-icon>
