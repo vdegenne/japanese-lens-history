@@ -35,6 +35,15 @@ class SearchPage extends PageElement {
 							<div>No result</div>
 							<!-- -->`}
 			</div>
+
+			<md-fab
+				class="fixed bottom-6 left-6"
+				@click=${() => {
+					store.search = store.search.slice(0, -1);
+				}}
+			>
+				<md-icon slot="icon">backspace</md-icon>
+			</md-fab>
 			<!-- -->`;
 	}
 }
