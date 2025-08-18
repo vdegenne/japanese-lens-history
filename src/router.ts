@@ -1,4 +1,5 @@
 import {Hash, Router} from '@vdegenne/router';
+import toast from 'toastit';
 import {store} from './store.js';
 
 export default new (class {
@@ -6,6 +7,7 @@ export default new (class {
 
 	#router = new Router(async ({}) => {
 		await store.updateComplete;
+		toast(`${store.search} ${store.page}`);
 		if (this.hash.has('search')) {
 			const search = this.hash.$('search');
 			if (search !== store.search) {

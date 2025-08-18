@@ -3,7 +3,6 @@ import {FormBuilder} from '@vdegenne/forms/FormBuilder';
 import {PropertyValues} from 'snar';
 import {saveToLocalStorage} from 'snar-save-to-local-storage';
 import {filenames, search} from './data.js';
-import router from './router.js';
 
 @saveToLocalStorage('lens-history:store')
 export class AppStore extends ReactiveController {
@@ -39,6 +38,7 @@ export class AppStore extends ReactiveController {
 	}
 
 	async updated(_changedProperties: PropertyValues<this>) {
+		console.log('store updated');
 		if (_changedProperties.has('page')) {
 			switch (this.page) {
 				case 'search':
@@ -48,7 +48,9 @@ export class AppStore extends ReactiveController {
 					import('./pages/viewer-page.js');
 					break;
 			}
-			router.hash.$('page', this.page);
+			import('./router.js').then(({default: router}) => {
+				router.hash.$('page', this.page);
+			});
 		}
 		if (_changedProperties.has('search') && this.search) {
 			import('./router.js').then(({default: router}) => {
