@@ -146,7 +146,7 @@ router.post('/api/save-lens-session', async (ctx) => {
 		let {sessionId: id, base64} = ctx.request.body;
 		if (!id) {
 			LOG('missing sessionId');
-			ctx.throw('missing "sessionId"', 400);
+			ctx.throw(400, 'missing "sessionId"');
 		}
 		const {exists} = sessionExists(id);
 		if (exists) {
@@ -156,8 +156,8 @@ router.post('/api/save-lens-session', async (ctx) => {
 		if (!base64) {
 			LOG('missing base64');
 			ctx.throw(
-				'base64 is required. (use "clipboard" as the value to use data from clipboard)',
 				400,
+				'base64 is required. (use "clipboard" as the value to use data from clipboard)',
 			);
 		}
 
@@ -202,21 +202,21 @@ router.post('/api/direct-upload', async (ctx) => {
 	let {sessionId: id, base64, parts} = ctx.request.body as UploadBodyParams;
 	if (id === undefined) {
 		LOG('sessionId is missing');
-		ctx.throw('sessionId is missing', 400);
+		ctx.throw(400, 'sessionId is missing');
 	}
 	if (savedIds.includes(id)) {
 		ctx.throw('session already saved.');
 	}
 	if (parts === undefined) {
 		LOG('parts missing');
-		ctx.throw('parts missing', 400);
+		ctx.throw(400, 'parts missing');
 	} else if (parts.length === 0) {
 		LOG('parts are empty.');
-		ctx.throw('parts are empty.', 400);
+		ctx.throw(400, 'parts are empty.');
 	}
 
 	if (!base64) {
-		ctx.throw('base64 missing', 400);
+		ctx.throw(400, 'base64 missing');
 	}
 	if (base64 === 'clipboard') {
 		base64 = await getClipboardImageAsBase64();
@@ -260,14 +260,14 @@ router.post('/api/upload', async (ctx) => {
 
 	if (id === undefined) {
 		LOG('sessionId is missing');
-		ctx.throw('sessionId is missing', 400);
+		ctx.throw(400, 'sessionId is missing');
 	}
 	if (parts === undefined) {
 		LOG('parts missing');
-		ctx.throw('parts missing', 400);
+		ctx.throw(400, 'parts missing');
 	} else if (parts.length === 0) {
 		LOG('parts are empty.');
-		ctx.throw('parts are empty.', 400);
+		ctx.throw(400, 'parts are empty.');
 	}
 
 	let {session} = sessionExists(id);
@@ -277,8 +277,8 @@ router.post('/api/upload', async (ctx) => {
 				'no session found in the cache and "base64" was not provided. Make sure you call /api/save-lens-session first. This could also mean the image was already saved.',
 			);
 			ctx.throw(
-				'no session found in the cache and "base64" was not provided.',
 				400,
+				'no session found in the cache and "base64" was not provided.',
 			);
 		} else {
 			session = {
