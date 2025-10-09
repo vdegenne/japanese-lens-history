@@ -1,3 +1,4 @@
+import {DEBUG} from '@vdegenne/debug';
 import {html, LitElement} from 'lit';
 import {withStyles} from 'lit-with-styles';
 import {customElement, property, queryAll, state} from 'lit/decorators.js';

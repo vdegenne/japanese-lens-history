@@ -19,6 +19,12 @@ declare global {
 		}[];
 		text: string;
 	}
+
+	interface GoogleLensSession {
+		id: string;
+		timestamp: number;
+		base64: string;
+	}
 }
 
 export {};
