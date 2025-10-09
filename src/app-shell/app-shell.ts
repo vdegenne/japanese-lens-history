@@ -10,6 +10,7 @@ import {materialShellLoadingOff} from 'material-shell';
 import {F, store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
+import {filenames} from '../data.js';
 
 declare global {
 	interface Window {
@@ -43,7 +44,13 @@ export class AppShell extends LitElement {
 			>
 				<div slot="title" class="ml-[-19px]">
 					${store.page === 'viewer'
-						? html`<div>#${store.viewIndex}</div>`
+						? html` <md-list-item>
+									<div slot="headline">#${store.viewIndex}</div>
+									<div slot="supporting-text">
+										${filenames[store.viewIndex]}
+									</div>
+								</md-list-item>
+								<div hidden>#${store.viewIndex}</div>`
 						: store.page === 'search'
 							? html`${F.TEXTFIELD('', 'search', {
 									style: 'filled',
