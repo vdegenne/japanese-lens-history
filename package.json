@@ -16,14 +16,15 @@
 		"@tailwindcss/postcss": "^4.1.14",
 		"@types/fs-extra": "^11.0.4",
 		"@vdegenne/about-dialog": "^0.4.2",
-		"@vdegenne/debug": "file:../debug",
+		"@vdegenne/debug": "^0.1.5",
 		"@vdegenne/forms": "^0.1.51",
+		"@vdegenne/koa": "^0.1.7",
 		"@vdegenne/links": "^1.7.11",
 		"@vdegenne/material-color-helpers": "^1.11.7",
 		"@vdegenne/mini-gamepad": "^0.4.0",
 		"@vdegenne/rollup-plugin-minify-html": "^1.0.6",
 		"@vdegenne/router": "^0.1.4",
-		"@vdegenne/server-helpers": "file:../server-helpers",
+		"@vdegenne/server-helpers": "^0.2.5",
 		"@vite-pwa/assets-generator": "^1.0.2",
 		"chalk": "^5.6.2",
 		"custom-element-decorator": "^0.6.0",
@@ -47,7 +48,6 @@
 		"wireit": "^0.14.12"
 	},
 	"dependencies": {
-		"@vdegenne/koa": "file:../koa",
 		"node-fetch": "^3.3.2"
 	},
 	"scripts": {
