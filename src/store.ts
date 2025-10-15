@@ -1,5 +1,5 @@
 import {ReactiveController, state} from '@snar/lit';
-import {FormBuilder} from '@vdegenne/forms/FormBuilder';
+import {FormBuilder} from '@vdegenne/forms/FormBuilder.js';
 import {PropertyValues} from 'snar';
 import {saveToLocalStorage} from 'snar-save-to-local-storage';
 import {filenames, search} from './data.js';
@@ -38,7 +38,6 @@ export class AppStore extends ReactiveController {
 	}
 
 	async updated(_changedProperties: PropertyValues<this>) {
-		console.log('store updated');
 		if (_changedProperties.has('page')) {
 			switch (this.page) {
 				case 'search':
@@ -53,9 +52,9 @@ export class AppStore extends ReactiveController {
 			});
 		}
 		if (_changedProperties.has('search') && this.search) {
-			import('./router.js').then(({default: router}) => {
-				router.hash.$('search', this.search);
-			});
+			// import('./router.js').then(({default: router}) => {
+			// 	router.hash.$('search', this.search);
+			// });
 			if (!this.search) {
 				this.searchResult = [];
 			} else {

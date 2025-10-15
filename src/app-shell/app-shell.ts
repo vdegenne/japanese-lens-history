@@ -1,3 +1,4 @@
+import '@material/web/iconbutton/icon-button.js';
 import '@material/mwc-top-app-bar';
 import {TopAppBar} from '@material/mwc-top-app-bar';
 import '@material/web/textfield/filled-text-field.js';
@@ -56,6 +57,7 @@ export class AppShell extends LitElement {
 									style: 'filled',
 									styles:
 										'--md-filled-field-outline-width:0;--md-filled-field-focus-outline-width:0;--md-outlined-field-hover-outline-width:0',
+									resetButton: {},
 									async init(element) {
 										// await sleep(100);
 										// element.focus();
