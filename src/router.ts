@@ -7,7 +7,7 @@ export default new (class {
 
 	#router = new Router(async ({}) => {
 		await store.updateComplete;
-		toast(`${store.search} ${store.page}`);
+		// toast(`${store.search} ${store.page}`);
 		if (this.hash.has('search')) {
 			const search = this.hash.$('search');
 			if (search !== store.search) {

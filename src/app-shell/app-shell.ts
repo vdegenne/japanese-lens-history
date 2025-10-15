@@ -1,4 +1,5 @@
 import '@material/mwc-top-app-bar';
+import {TopAppBar} from '@material/mwc-top-app-bar';
 import '@material/web/textfield/filled-text-field.js';
 import '@material/web/textfield/outlined-text-field.js';
 import {withController} from '@snar/lit';
@@ -9,7 +10,7 @@ import {materialShellLoadingOff} from 'material-shell';
 import {F, store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
-import {TopAppBar} from '@material/mwc-top-app-bar';
+import {filenames} from '../data.js';
 
 declare global {
 	interface Window {
@@ -43,12 +44,18 @@ export class AppShell extends LitElement {
 			>
 				<div slot="title" class="ml-[-19px]">
 					${store.page === 'viewer'
-						? html`<div>#${store.viewIndex}</div>`
+						? html` <md-list-item>
+									<div slot="headline">#${store.viewIndex}</div>
+									<div slot="supporting-text">
+										${filenames[store.viewIndex]}
+									</div>
+								</md-list-item>
+								<div hidden>#${store.viewIndex}</div>`
 						: store.page === 'search'
 							? html`${F.TEXTFIELD('', 'search', {
-									style: 'outlined',
+									style: 'filled',
 									styles:
-										'--md-outlined-field-outline-width:0;--md-outlined-field-focus-outline-width:0;--md-outlined-field-hover-outline-width:0',
+										'--md-filled-field-outline-width:0;--md-filled-field-focus-outline-width:0;--md-outlined-field-hover-outline-width:0',
 									async init(element) {
 										// await sleep(100);
 										// element.focus();

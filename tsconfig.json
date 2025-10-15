@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "ESNext",
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
+		"target": "esnext",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"useDefineForClassFields": false,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
@@ -12,10 +12,8 @@
 			"lit",
 			"lit/decorators.js",
 			"material-shell",
-			"./types.d.ts",
 			"toastit"
 		]
 	},
-	"include": ["./src/**/*.ts"],
-	"exclude": ["./node_modules"]
+	"include": ["./src/**/*.ts", "./types.d.ts"]
 }

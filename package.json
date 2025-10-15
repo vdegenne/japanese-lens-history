@@ -1,171 +1,165 @@
 {
-  "name": "japanese-lens-history",
-  "version": "1.0.0",
-  "description": "Google lens japanese learning history",
-  "type": "module",
-  "author": "Valentin Degenne <vdegenne@gmail.com>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "devDependencies": {
-    "@material/mwc-top-app-bar": "^0.27.0",
-    "@material/web": "^2.3.0",
-    "@snar/lit": "^1.8.1",
-    "@tailwindcss/postcss": "^4.1.12",
-    "@types/fs-extra": "^11.0.4",
-    "@types/koa": "^3.0.0",
-    "@types/koa__cors": "^5.0.0",
-    "@types/koa__router": "^12.0.4",
-    "@types/koa-static": "^4.0.4",
-    "@vdegenne/about-dialog": "^0.4.2",
-    "@vdegenne/forms": "^0.1.30",
-    "@vdegenne/links": "^1.7.7",
-    "@vdegenne/material-color-helpers": "^1.11.1",
-    "@vdegenne/mini-gamepad": "^0.4.0",
-    "@vdegenne/rollup-plugin-minify-html": "^1.0.6",
-    "@vdegenne/router": "^0.1.3",
-    "@vite-pwa/assets-generator": "^1.0.0",
-    "chalk": "^5.6.0",
-    "custom-element-decorator": "^0.6.0",
-    "html-vision": "^0.3.2",
-    "lit": "^3.3.1",
-    "lit-with-styles": "^2.1.3",
-    "material-3-prompt-dialog": "^1.0.1",
-    "material-shell": "^1.3.2",
-    "postcss": "^8.5.6",
-    "pwa-helpers": "^0.9.1",
-    "rollup-plugin-material-all": "^1.2.2",
-    "rollup-plugin-minify-template-literals": "^1.1.7",
-    "snar": "^2.3.7",
-    "snar-save-to-local-storage": "^1.0.1",
-    "toastit": "^2.2.2",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.2",
-    "vite-plugin-mdicon2svg": "^0.2.0",
-    "vite-plugin-pwa": "^1.0.2",
-    "vscode-ui-connector": "^0.2.4",
-    "wireit": "^0.14.12"
-  },
-  "dependencies": {
-    "@koa/bodyparser": "^6.0.0",
-    "@koa/cors": "^5.0.0",
-    "@koa/router": "^14.0.0",
-    "fs-extra": "^11.3.1",
-    "koa": "^3.0.1",
-    "koa-static": "^5.0.0",
-    "node-fetch": "^3.3.2"
-  },
-  "scripts": {
-    "build:server": "wireit",
-    "serve:server": "wireit",
-    "dev:front": "wireit",
-    "dev": "wireit",
-    "build": "wireit",
-    "test": "wireit",
-    "serve": "wireit",
-    "build:filenames-text-map": "wireit",
-    "pm2": "pm2 start \"npm run serve --watch\" --name lens-history",
-    "pwa-assets": "wireit"
-  },
-  "wireit": {
-    "serve": {
-      "dependencies": [
-        "serve:server",
-        "push-last-data-file"
-      ]
-    },
-    "build:filenames-text-map": {
-      "command": "node ./scripts/construct-filenames-texts-map.js",
-      "files": [
-        "./scripts/construct-filenames-texts-map.js",
-        "./dist/data"
-      ],
-      "output": [
-        "./src/filenamesTextsMap.json"
-      ]
-    },
-    "build:server": {
-      "command": "tsc --project ./tsconfig.server.json",
-      "clean": "if-file-deleted",
-      "files": [
-        "./tsconfig.server.json",
-        "./src/server.ts"
-      ],
-      "output": [
-        "./server.js"
-      ]
-    },
-    "serve:server": {
-      "service": true,
-      "command": "node server.js",
-      "dependencies": [
-        "build:server"
-      ]
-    },
-    "dev": {
-      "dependencies": [
-        "build:filenames-text-map",
-        "dev:front",
-        "dev:vuc"
-      ]
-    },
-    "dev:front": {
-      "service": true,
-      "command": "vite --host",
-      "dependencies": [
-        "dev:vuc"
-      ]
-    },
-    "build:front": {
-      "command": "vite build",
-      "dependencies": [
-        "build:filenames-text-map"
-      ],
-      "files": [
-        "./vite.config.ts",
-        "./src/"
-      ],
-      "output": [
-        "./dist",
-        "!./dist/data"
-      ]
-    },
-    "build": {
-      "dependencies": [
-        "build:server",
-        "build:front"
-      ]
-    },
-    "push-last-data-file": {
-      "command": "./scripts/commit-last-data-file.sh",
-      "files": [
-        "./scripts/commit-last-data-file.sh",
-        "./dist/data/"
-      ],
-      "output": []
-    },
-    "dev:vuc": {
-      "service": true,
-      "command": "vuc",
-      "files": [
-        "./.vuc.json"
-      ]
-    },
-    "pwa-assets": {
-      "command": "pwa-assets-generator --preset minimal-2023 --html.preset 2023 public/logo.svg",
-      "files": [
-        "public/logo.svg"
-      ],
-      "output": [
-        "public/pwa-64x64.png",
-        "public/pwa-192x192.png",
-        "public/pwa-512x512.png",
-        "public/maskable-icon-512x512.png",
-        "public/apple-touch-icon-180x180.png",
-        "public/favicon.ico"
-      ]
-    }
-  }
+	"name": "japanese-lens-history",
+	"version": "1.0.0",
+	"description": "Google lens japanese learning history",
+	"type": "module",
+	"author": "Valentin Degenne <vdegenne@gmail.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": ""
+	},
+	"devDependencies": {
+		"@material/mwc-top-app-bar": "^0.27.0",
+		"@material/web": "^2.4.0",
+		"@snar/lit": "^1.8.1",
+		"@tailwindcss/postcss": "^4.1.14",
+		"@types/fs-extra": "^11.0.4",
+		"@vdegenne/about-dialog": "^0.4.2",
+		"@vdegenne/debug": "file:../debug",
+		"@vdegenne/forms": "^0.1.50",
+		"@vdegenne/links": "^1.7.9",
+		"@vdegenne/material-color-helpers": "^1.11.7",
+		"@vdegenne/mini-gamepad": "^0.4.0",
+		"@vdegenne/rollup-plugin-minify-html": "^1.0.6",
+		"@vdegenne/router": "^0.1.4",
+		"@vdegenne/server-helpers": "file:../server-helpers",
+		"@vite-pwa/assets-generator": "^1.0.1",
+		"chalk": "^5.6.2",
+		"custom-element-decorator": "^0.6.0",
+		"html-vision": "^0.3.4",
+		"lit": "^3.3.1",
+		"lit-with-styles": "^2.1.3",
+		"material-3-prompt-dialog": "^1.0.1",
+		"material-shell": "^1.3.3",
+		"postcss": "^8.5.6",
+		"pwa-helpers": "^0.9.1",
+		"rollup-plugin-material-all": "^1.2.2",
+		"rollup-plugin-minify-template-literals": "^1.1.7",
+		"snar": "^2.3.7",
+		"snar-save-to-local-storage": "^1.0.1",
+		"toastit": "^2.2.2",
+		"typescript": "^5.9.3",
+		"vite": "^7.1.9",
+		"vite-plugin-mdicon2svg": "^0.2.3",
+		"vite-plugin-pwa": "^1.0.3",
+		"vscode-ui-connector": "^0.2.4",
+		"wireit": "^0.14.12"
+	},
+	"dependencies": {
+		"@vdegenne/koa": "file:../koa",
+		"node-fetch": "^3.3.2"
+	},
+	"scripts": {
+		"build:server": "wireit",
+		"serve:server": "wireit",
+		"dev:front": "wireit",
+		"dev": "wireit",
+		"build": "wireit",
+		"test": "wireit",
+		"serve": "wireit",
+		"build:filenames-text-map": "wireit",
+		"pm2": "pm2 start \"npm run serve --watch\" --name lens-history",
+		"pwa-assets": "wireit"
+	},
+	"wireit": {
+		"serve": {
+			"dependencies": [
+				"serve:server",
+				"push-last-data-file"
+			]
+		},
+		"build:filenames-text-map": {
+			"command": "node ./scripts/construct-filenames-texts-map.js",
+			"files": [
+				"./scripts/construct-filenames-texts-map.js",
+				"./dist/data"
+			],
+			"output": [
+				"./src/filenamesTextsMap.json"
+			]
+		},
+		"build:server": {
+			"command": "tsc --project ./tsconfig.server.json",
+			"clean": "if-file-deleted",
+			"files": [
+				"./tsconfig.server.json",
+				"./src/server/**/*"
+			],
+			"output": [
+				"./lib/"
+			]
+		},
+		"serve:server": {
+			"service": true,
+			"command": "node ./lib/server.js",
+			"dependencies": [
+				"build:server"
+			],
+			"files": []
+		},
+		"dev": {
+			"dependencies": [
+				"build:filenames-text-map",
+				"dev:front",
+				"dev:vuc"
+			]
+		},
+		"dev:front": {
+			"service": true,
+			"command": "vite --host",
+			"dependencies": [
+				"dev:vuc"
+			]
+		},
+		"build:front": {
+			"command": "vite build",
+			"dependencies": [
+				"build:filenames-text-map"
+			],
+			"files": [
+				"./vite.config.ts",
+				"./src/"
+			],
+			"output": [
+				"./dist",
+				"!./dist/data"
+			]
+		},
+		"build": {
+			"dependencies": [
+				"build:server",
+				"build:front"
+			]
+		},
+		"push-last-data-file": {
+			"command": "./scripts/commit-last-data-file.sh",
+			"files": [
+				"./scripts/commit-last-data-file.sh",
+				"./dist/data/"
+			],
+			"output": []
+		},
+		"dev:vuc": {
+			"service": true,
+			"command": "vuc",
+			"files": [
+				"./.vuc.json"
+			]
+		},
+		"pwa-assets": {
+			"command": "pwa-assets-generator --preset minimal-2023 --html.preset 2023 public/logo.svg",
+			"files": [
+				"public/logo.svg"
+			],
+			"output": [
+				"public/pwa-64x64.png",
+				"public/pwa-192x192.png",
+				"public/pwa-512x512.png",
+				"public/maskable-icon-512x512.png",
+				"public/apple-touch-icon-180x180.png",
+				"public/favicon.ico"
+			]
+		}
+	}
 }
