@@ -106,7 +106,7 @@ config<LensHistoryAPI>({
 	post: {
 		async '/api/direct-upload'({ctx, guard}) {
 			log('/api/direct-upload route called');
-			const {id, base64, parts} = guard({
+			const {id, base64, parts, directory} = guard({
 				required: ['id', 'base64', 'parts'],
 				allowAlien: true,
 			});
@@ -148,7 +148,7 @@ config<LensHistoryAPI>({
 
 			const timestamp = Date.now();
 
-			const filepath = `${IMAGES_DIRPATH}/${timestamp}_${imageHash}.json`;
+			const filepath = `${IMAGES_DIRPATH}${directory ? `/${directory}` : ''}/${timestamp}_${imageHash}.json`;
 			const dataSize = Buffer.byteLength(nakedBase64Image, 'base64');
 
 			logger.log(`writing ${filepath} to system (size: ${dataSize}B)`);

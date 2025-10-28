@@ -4,6 +4,7 @@ interface UploadBodyParams {
 	id: string;
 	base64: string;
 	parts: ImageInformation['parts'];
+	directory?: string;
 }
 
 export interface LensHistoryAPI {
@@ -15,6 +16,6 @@ export interface LensHistoryAPI {
 	};
 }
 
-export function getAPI(origin = 'http://localhost:3020/api') {
+export function getApi(origin = 'http://localhost:3020/api') {
 	return new Rest<LensHistoryAPI>(origin);
 }
