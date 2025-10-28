@@ -3,7 +3,10 @@ import {Rest, type Endpoint} from '@vdegenne/mini-rest';
 interface UploadBodyParams {
 	id: string;
 	base64: string;
-	parts: ImageInformation['parts'];
+	parts: {
+		label: string;
+		style: string;
+	}[];
 	directory?: string;
 }
 
@@ -12,7 +15,7 @@ export interface LensHistoryAPI {
 		'/ping': Endpoint<void, 'pong'>;
 	};
 	post: {
-		'/api/direct-upload': Endpoint<UploadBodyParams, void>;
+		'/direct-upload': Endpoint<UploadBodyParams, void>;
 	};
 }
 

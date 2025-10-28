@@ -98,13 +98,14 @@ function log(text: any) {
 let savedIds: string[] = [];
 
 config<LensHistoryAPI>({
+	apiVersion: 'api',
 	port: PORT,
 	useCors: true,
 	get: {
 		'/ping': () => 'pong',
 	},
 	post: {
-		async '/api/direct-upload'({ctx, guard}) {
+		async '/direct-upload'({ctx, guard}) {
 			log('/api/direct-upload route called');
 			const {id, base64, parts, directory} = guard({
 				required: ['id', 'base64', 'parts'],

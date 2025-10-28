@@ -1,3 +1,3 @@
-import {getAPI} from './server/api.js';
+import {getApi} from './server/api.js';
 
-export const api = getAPI('/api');
+export const api = getApi('/api');
