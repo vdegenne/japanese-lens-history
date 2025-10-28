@@ -1,10 +1,9 @@
 import {Logger} from '@vdegenne/debug';
 import {config} from '@vdegenne/koa';
-import {checkFields} from '@vdegenne/koa/checkFields.js';
-import {ArrayJsonDataFile} from '@vdegenne/server-helpers/ArrayJsonDataFile.js';
 import chalk from 'chalk';
 import fs from 'node:fs/promises';
 import pathlib from 'path';
+import type {LensHistoryAPI} from './api.js';
 import {IMAGES_DIRPATH, PORT} from './constants.js';
 import {
 	generateHashFromBase64,
@@ -96,33 +95,20 @@ function log(text: any) {
 // 	saveWrittenSessions();
 // }
 
-interface UploadBodyParams {
-	id: string;
-	base64: string;
-	parts: ImageInformation['parts'];
-}
-
 let savedIds: string[] = [];
 
-config({
+config<LensHistoryAPI>({
 	port: PORT,
 	useCors: true,
 	get: {
-		'/ping': (ctx) => {
-			log('pong');
-			ctx.body = 'pong';
-		},
+		'/ping': () => 'pong',
 	},
 	post: {
-		'/api/save-lens-session': (ctx) => {
-			log('/api/save-lens-session route called');
-		},
-		'/api/direct-upload': async (ctx) => {
+		async '/api/direct-upload'({ctx, guard}) {
 			log('/api/direct-upload route called');
-			const {id, base64, parts} = checkFields<UploadBodyParams>({
-				ctx,
-				fields: ['id', 'base64', 'parts'],
-				requireds: ['id', 'base64', 'parts'],
+			const {id, base64, parts} = guard({
+				required: ['id', 'base64', 'parts'],
+				allowAlien: true,
 			});
 			if (savedIds.includes(id)) {
 				logger.error('session already saved');
@@ -176,9 +162,6 @@ config({
 			savedIds.push(id);
 			ctx.status = 201;
 			ctx.body = {message: 'Image uploaded and saved'};
-		},
-		'/api/upload': (ctx) => {
-			log('/api/upload route called');
 		},
 	},
 });
