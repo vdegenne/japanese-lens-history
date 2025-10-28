@@ -1,6 +1,6 @@
 {
 	"name": "@vdegenne/japanese-lens-history",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Google lens japanese learning history",
 	"type": "module",
 	"author": "Valentin Degenne <vdegenne@gmail.com>",
@@ -168,6 +168,9 @@
 			"import": "./lib/api.js",
 			"types": "./lib/api.d.ts"
 		}
+	},
+	"peerDependencies": {
+		"@vdegenne/mini-rest": "^0.3.2"
 	},
 	"files": [
 		"./lib/api.*"
