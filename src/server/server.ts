@@ -12,9 +12,11 @@ import {
 	stripBase64Header,
 } from './utils.js';
 
-// const __dirname = import.meta.dirname;
-
-const logger = new Logger({color: chalk.yellow});
+const logger = new Logger({
+	color: chalk.yellow,
+	errorColor: chalk.red,
+	prefix: 'LENS-HIST-SRV',
+});
 function log(text: any) {
 	logger.log(text);
 }
@@ -107,14 +109,13 @@ config<LensHistoryAPI>({
 	},
 	post: {
 		async '/direct-upload'({ctx, guard}) {
-			log('/api/direct-upload route called');
 			const {id, base64, parts, directory} = guard({
 				required: ['id', 'base64', 'parts'],
 				allowAlien: true,
 			});
 			if (savedIds.includes(id)) {
 				logger.error('session already saved');
-				ctx.throw('session already saved.');
+				ctx.throw(400, 'session already saved.');
 			}
 			if (parts.length === 0) {
 				logger.error('parts are empty.');
@@ -135,7 +136,7 @@ config<LensHistoryAPI>({
 			// take the x most recent files and check the parts if they match, of course the match
 			// should make sense over at least parts of length y.
 			if (await hashFileExists(imageHash)) {
-				logger.log(`This lens is already saved. Ignoring.`);
+				logger.error(`This lens is already saved. Ignoring.`);
 				ctx.status = 200;
 				ctx.body = {message: 'Image already exists, no new file created'};
 				return;

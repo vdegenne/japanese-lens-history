@@ -16,7 +16,7 @@
 		"@tailwindcss/postcss": "^4.1.16",
 		"@types/fs-extra": "^11.0.4",
 		"@vdegenne/about-dialog": "^0.4.2",
-		"@vdegenne/debug": "^0.1.13",
+		"@vdegenne/debug": "^0.1.15",
 		"@vdegenne/forms": "^0.1.52",
 		"@vdegenne/koa": "^0.1.21",
 		"@vdegenne/links": "^1.7.11",
@@ -59,7 +59,9 @@
 		"dev": "wireit",
 		"build": "wireit",
 		"build:filenames-text-map": "wireit",
-		"pwa-assets": "wireit"
+		"pwa-assets": "wireit",
+		"pm2:local:server": "pm2 start \"NODE_ENV=dev FORCE_COLOR=1 npm run serve:server --watch\" --name jlh-server",
+		"pm2:local:front": "pm2 start \"NODE_ENV=dev FORCE_COLOR=1 npm run dev:vite --watch\" --name jlh-front"
 	},
 	"wireit": {
 		"watch:data": {
@@ -105,7 +107,7 @@
 			"files": []
 		},
 		"build:server": {
-			"command": "tsc --project ./tsconfig.server.json",
+			"command": "tsc --pretty --project ./tsconfig.server.json",
 			"clean": "if-file-deleted",
 			"files": [
 				"./tsconfig.server.json",
