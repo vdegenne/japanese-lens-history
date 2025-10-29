@@ -55,41 +55,28 @@
 	"scripts": {
 		"build:server": "wireit",
 		"serve:server": "wireit",
-		"dev:front": "wireit",
+		"dev:vite": "wireit",
 		"dev": "wireit",
 		"build": "wireit",
-		"test": "wireit",
-		"serve": "wireit",
 		"build:filenames-text-map": "wireit",
-		"pm2": "pm2 start \"npm run serve --watch\" --name lens-history",
 		"pwa-assets": "wireit"
 	},
 	"wireit": {
-		"serve": {
-			"dependencies": [
-				"serve:server",
-				"push-last-data-file"
+		"watch:data": {
+			"files": [
+				"./dist/data"
 			]
 		},
 		"build:filenames-text-map": {
 			"command": "node ./scripts/construct-filenames-texts-map.js",
+			"dependencies": [
+				"watch:data"
+			],
 			"files": [
-				"./scripts/construct-filenames-texts-map.js",
-				"./dist/data"
+				"./scripts/construct-filenames-texts-map.js"
 			],
 			"output": [
 				"./src/filenamesTextsMap.json"
-			]
-		},
-		"build:server": {
-			"command": "tsc --project ./tsconfig.server.json",
-			"clean": "if-file-deleted",
-			"files": [
-				"./tsconfig.server.json",
-				"./src/server/**/*"
-			],
-			"output": [
-				"./lib/"
 			]
 		},
 		"serve:server": {
@@ -103,15 +90,29 @@
 		"dev": {
 			"dependencies": [
 				"build:filenames-text-map",
-				"dev:front",
+				"dev:vite",
 				"dev:vuc"
 			]
 		},
-		"dev:front": {
+		"dev:vite": {
 			"service": true,
 			"command": "vite --host",
 			"dependencies": [
+				"pwa-assets",
+				"build:filenames-text-map",
 				"dev:vuc"
+			],
+			"files": []
+		},
+		"build:server": {
+			"command": "tsc --project ./tsconfig.server.json",
+			"clean": "if-file-deleted",
+			"files": [
+				"./tsconfig.server.json",
+				"./src/server/**/*"
+			],
+			"output": [
+				"./lib/"
 			]
 		},
 		"build:front": {

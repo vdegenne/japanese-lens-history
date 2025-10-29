@@ -101,6 +101,7 @@ config<LensHistoryAPI>({
 	apiVersion: 'api',
 	port: PORT,
 	useCors: true,
+	statics: ['./dist'],
 	get: {
 		'/ping': () => 'pong',
 	},
