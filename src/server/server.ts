@@ -1,10 +1,9 @@
 import {Logger} from '@vdegenne/debug';
 import {config} from '@vdegenne/koa';
-import {checkFields} from '@vdegenne/koa/checkFields.js';
-import {ArrayJsonDataFile} from '@vdegenne/server-helpers/ArrayJsonDataFile.js';
 import chalk from 'chalk';
 import fs from 'node:fs/promises';
 import pathlib from 'path';
+import type {LensHistoryAPI} from './api.js';
 import {IMAGES_DIRPATH, PORT} from './constants.js';
 import {
 	generateHashFromBase64,
@@ -13,9 +12,11 @@ import {
 	stripBase64Header,
 } from './utils.js';
 
-// const __dirname = import.meta.dirname;
-
-const logger = new Logger({color: chalk.yellow});
+const logger = new Logger({
+	color: chalk.yellow,
+	errorColor: chalk.red,
+	prefix: 'LENS-HIST-SRV',
+});
 function log(text: any) {
 	logger.log(text);
 }
@@ -96,37 +97,25 @@ function log(text: any) {
 // 	saveWrittenSessions();
 // }
 
-interface UploadBodyParams {
-	id: string;
-	base64: string;
-	parts: ImageInformation['parts'];
-}
-
 let savedIds: string[] = [];
 
-config({
+config<LensHistoryAPI>({
+	apiVersion: 'api',
 	port: PORT,
 	useCors: true,
+	statics: ['./dist'],
 	get: {
-		'/ping': (ctx) => {
-			log('pong');
-			ctx.body = 'pong';
-		},
+		'/ping': () => 'pong',
 	},
 	post: {
-		'/api/save-lens-session': (ctx) => {
-			log('/api/save-lens-session route called');
-		},
-		'/api/direct-upload': async (ctx) => {
-			log('/api/direct-upload route called');
-			const {id, base64, parts} = checkFields<UploadBodyParams>({
-				ctx,
-				fields: ['id', 'base64', 'parts'],
-				requireds: ['id', 'base64', 'parts'],
+		async '/direct-upload'({ctx, guard}) {
+			const {id, base64, parts, directory} = guard({
+				required: ['id', 'base64', 'parts'],
+				allowAlien: true,
 			});
 			if (savedIds.includes(id)) {
 				logger.error('session already saved');
-				ctx.throw('session already saved.');
+				ctx.throw(400, 'session already saved.');
 			}
 			if (parts.length === 0) {
 				logger.error('parts are empty.');
@@ -147,7 +136,7 @@ config({
 			// take the x most recent files and check the parts if they match, of course the match
 			// should make sense over at least parts of length y.
 			if (await hashFileExists(imageHash)) {
-				logger.log(`This lens is already saved. Ignoring.`);
+				logger.error(`This lens is already saved. Ignoring.`);
 				ctx.status = 200;
 				ctx.body = {message: 'Image already exists, no new file created'};
 				return;
@@ -162,7 +151,7 @@ config({
 
 			const timestamp = Date.now();
 
-			const filepath = `${IMAGES_DIRPATH}/${timestamp}_${imageHash}.json`;
+			const filepath = `${IMAGES_DIRPATH}${directory ? `/${directory}` : ''}/${timestamp}_${imageHash}.json`;
 			const dataSize = Buffer.byteLength(nakedBase64Image, 'base64');
 
 			logger.log(`writing ${filepath} to system (size: ${dataSize}B)`);
@@ -176,9 +165,6 @@ config({
 			savedIds.push(id);
 			ctx.status = 201;
 			ctx.body = {message: 'Image uploaded and saved'};
-		},
-		'/api/upload': (ctx) => {
-			log('/api/upload route called');
 		},
 	},
 });

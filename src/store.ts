@@ -9,7 +9,7 @@ export class AppStore extends ReactiveController {
 	@state() viewIndex = 0;
 	@state() page: Page = 'viewer';
 	@state() search = '';
-	@state() searchResult = [];
+	@state() searchResult: string[] = [];
 
 	previous = () => {
 		this.viewIndex = (this.viewIndex - 1 + filenames.length) % filenames.length;

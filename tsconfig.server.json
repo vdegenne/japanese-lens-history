@@ -5,7 +5,10 @@
 		"moduleResolution": "nodenext",
 		"outDir": "./lib/",
 		"esModuleInterop": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true
 	},
 	"include": ["./src/server/**/*.ts", "./types.d.ts"]
 }

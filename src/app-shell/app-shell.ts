@@ -12,6 +12,7 @@ import {F, store} from '../store.js';
 import '../viewer-element/viewer-element.js';
 import styles from './app-shell.css?inline';
 import {filenames} from '../data.js';
+import {sleep} from '../utils.js';
 
 declare global {
 	interface Window {
@@ -54,13 +55,17 @@ export class AppShell extends LitElement {
 								<div hidden>#${store.viewIndex}</div>`
 						: store.page === 'search'
 							? html`${F.TEXTFIELD('', 'search', {
-									style: 'filled',
-									styles:
-										'--md-filled-field-outline-width:0;--md-filled-field-focus-outline-width:0;--md-outlined-field-hover-outline-width:0',
-									resetButton: {},
+									variant: 'filled',
+									style: {
+										'--md-filled-field-outline-width': 0,
+										'--md-filled-field-focus-outline-width': 0,
+										'--md-filled-field-hover-outline-width': 0,
+										'--md-outlined-field-hover-outline-width': 0,
+									},
+									resetButton: true,
 									async init(element) {
-										// await sleep(100);
-										// element.focus();
+										await sleep(100);
+										element.focus();
 									},
 								})}`
 							: null}
