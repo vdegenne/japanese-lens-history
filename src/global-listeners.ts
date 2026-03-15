@@ -1,4 +1,5 @@
 import {getThemeStore} from './imports.js';
+import {clickButton} from './utils.js';
 
 window.addEventListener('keydown', async (e) => {
 	if (e.altKey || e.ctrlKey) {
@@ -10,6 +11,13 @@ window.addEventListener('keydown', async (e) => {
 	}
 	if (e.key === 'd') {
 		(await getThemeStore()).toggleMode();
+	}
+
+	if (e.key === 'ArrowLeft') {
+		clickButton('#arrow-back');
+	}
+	if (e.key === 'ArrowRight') {
+		clickButton('#arrow-forward');
 	}
 });
 
