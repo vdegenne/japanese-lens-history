@@ -17,7 +17,7 @@ class GamepadController extends ReactiveController {
 		super();
 		const minigp = new MiniGamepad({
 			// pollSleepMs: 900,
-			toastModel: false,
+			// toastModel: false,
 			focusDeadTimeMs: 200,
 		});
 		minigp.onConnect((gamepad) => {
@@ -116,6 +116,7 @@ class GamepadController extends ReactiveController {
 			});
 			gamepad.for(R1).before(({mode}) => {
 				if (mode === Mode.NORMAL) {
+					store.togglePage();
 				}
 			});
 
@@ -160,7 +161,7 @@ class GamepadController extends ReactiveController {
 			gamepad.for(MIDDLE_LEFT).before(({mode}) => {
 				switch (mode) {
 					case Mode.NORMAL:
-						store.togglePage();
+						// store.togglePage();
 						break;
 
 					default:

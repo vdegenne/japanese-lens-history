@@ -48,3 +48,12 @@ img {
 .part[highlight] {
 	background-color: #dfdf1255;
 }
+
+.part[highlight1] {
+	background-color: color-mix(
+		in srgb,
+		var(--md-sys-color-outline-variant) 100%,
+		transparent
+	);
+	mix-blend-mode: difference;
+}

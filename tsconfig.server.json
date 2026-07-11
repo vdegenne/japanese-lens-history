@@ -4,7 +4,7 @@
 		"module": "nodenext",
 		"moduleResolution": "nodenext",
 		"outDir": "./lib/",
-		"rootDir": "./src/",
+		"rootDir": "./src/server/",
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"declaration": true,

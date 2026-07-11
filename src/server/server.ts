@@ -13,8 +13,10 @@ import {
 } from './utils.js';
 
 const logger = new Logger({
-	color: chalk.yellow,
-	errorColor: chalk.red,
+	colors: {
+		log: chalk.yellow,
+		error: chalk.red,
+	},
 	prefix: 'LENS-HIST-SRV',
 });
 function log(text: any) {

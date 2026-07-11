@@ -3,11 +3,11 @@
 		"target": "esnext",
 		"module": "nodenext",
 		"moduleResolution": "nodenext",
+		"strict": true,
 		"useDefineForClassFields": false,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
 		"resolveJsonModule": true,
-		"strict": true,
 		"types": [
 			"vite/client",
 			"lit",
